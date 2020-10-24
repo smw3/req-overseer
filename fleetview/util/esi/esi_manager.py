@@ -3,7 +3,7 @@ from flask import session, request, redirect, url_for
 import requests
 import time
 
-from .esi_error import ESIError
+from .esi_error import ESIError, check_response
 
 CLIENT_ID = "34ff20b9719a4cad93cf30e433594150"
 LOCAL_ADDRESS = "18.222.147.238"
@@ -13,6 +13,24 @@ SCOPES = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
 
 def is_authenticated():
     return "access_token" in session and session['access_token'] is not None
+
+def get_character_id():
+    if "character_id" in session and is_authenticated():
+        return session['character_id']
+    
+    session['character_id'] = get_char_info()['character_id']
+    return session['character_id']
+    
+def get_char_info():
+    url = "https://login.eveonline.com/oauth/verify"
+    
+    headers = {}
+    headers['Authorization'] = "Bearer  " + get_access_token()['access_token']
+    
+    req = requests.get(url, headers = headers)
+    check_response(req)
+
+    return req.json()
         
 def requires_auth(f):
     @wraps(f)

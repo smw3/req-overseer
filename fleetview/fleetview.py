@@ -13,7 +13,7 @@ def index():
 @app.route('/show_fleet')
 @requires_auth
 def show_fleet():    
-    return render_template('show_fleet.html')
+    return render_template('template/show_fleet.html')
 
 @app.route('/auth', methods=['GET'])
 def auth():
