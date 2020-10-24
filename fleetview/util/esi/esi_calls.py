@@ -41,12 +41,28 @@ def get_fleet_members():
     fleet_id = get_character_fleet()["fleet_id"]
     return esi_request(f"fleets/{fleet_id}/members")
 
+def resolve_ship_simple(type_id):
+    type_dict = resolve_type_id(type_id)
+    
+    new_dict = {}
+    new_dict["name"] = type_dict["name"]
+    
+    for dogma_attrib in type_dict["dogma_attributes"]:
+        resolved_dogma = resolve_dogma_attribute(dogma_attrib["attribute_id"])
+        new_dict[resolved_dogma["name"]] = dogma_attrib["value"]
+        
+    return new_dict
+
 def resolve_type_id_to_name(type_id):
     return resolve_type_id(type_id)["name"]
 
 @cachetools.func.ttl_cache(maxsize=128, ttl=480 * 60 * 60)
 def resolve_type_id(type_id):
     return esi_request(f"universe/types/{type_id}/", public = True)
+
+@cachetools.func.ttl_cache(maxsize=128, ttl=480 * 60 * 60)
+def resolve_dogma_attribute(attribute_id):
+    return esi_request(f"dogma/attributes/{attribute_id}/", public = True)
 
 @cachetools.func.ttl_cache(maxsize=128, ttl=480 * 60 * 60)
 def resolve_solar_system_id_to_name(system_id):
