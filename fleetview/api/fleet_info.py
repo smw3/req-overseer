@@ -22,7 +22,7 @@ def current_fleet():
             
             # add ship type to fleet comp
             out["fleet_comp"][ship_info["type"]] = out["fleet_comp"].get(ship_info["type"],0) + 1
-            out["ships"][ship_info["type"]] = out["ships"].get(ship_info["name"],0) + 1    
+            out["ships"][ship_info["name"]] = out["ships"].get(ship_info["name"],0) + 1    
 
             out["members"].append(member_dict)
                                
