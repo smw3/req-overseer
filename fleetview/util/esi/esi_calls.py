@@ -3,6 +3,8 @@ from .esi_error import check_response
 from .esi_manager import get_access_token, get_character_id
 from .esi_error import ESIError
 
+import cachetools.func
+
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -42,15 +44,19 @@ def get_fleet_members():
     fleet_id = get_character_fleet()["fleet_id"]
     return esi_request(f"fleets/{fleet_id}/members")
 
+@cachetools.func.ttl_cache(maxsize=128, ttl=480 * 60 * 60)
 def resolve_type_id_to_name(type_id):
     return esi_request(f"universe/types/{type_id}/", public = True)["name"]
 
+@cachetools.func.ttl_cache(maxsize=128, ttl=48 * 60 * 60)
 def resolve_corporation_id_to_name(corporation_id):
     return esi_request(f"corporations/{corporation_id}/", public = True)["name"]
 
+@cachetools.func.ttl_cache(maxsize=128, ttl=48 * 60 * 60)
 def resolve_alliance_id_to_name(alliance_id):
     return esi_request(f"alliances/{alliance_id}/", public = True)["name"]
 
+@cachetools.func.ttl_cache(maxsize=128, ttl=48 * 60 * 60)
 def resolve_character_id(character_id):
     out_dict = {}
     esi_dict = esi_request(f"characters/{character_id}/", public = True)
