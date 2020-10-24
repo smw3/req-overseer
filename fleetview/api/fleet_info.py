@@ -5,6 +5,11 @@ from ..util.esi.esi_manager import requires_auth, get_auth_url, fetch_access_tok
 from ..util.esi.esi_calls import get_fleet_members
 from ..util.esi.esi_error import CharacterNotInFleetError
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 @app.route('/api/fleet')
 @requires_auth
 def current_fleet():    

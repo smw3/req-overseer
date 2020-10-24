@@ -5,6 +5,11 @@ import time
 
 from .esi_error import ESIError, check_response
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 CLIENT_ID = "34ff20b9719a4cad93cf30e433594150"
 LOCAL_ADDRESS = "18.222.147.238"
 LOCAL_PORT = "80"
@@ -18,6 +23,7 @@ def get_character_id():
     if "character_id" in session and is_authenticated():
         return session['character_id']
     
+    logger.warn(get_char_info())
     session['character_id'] = get_char_info()['character_id']
     return session['character_id']
     
