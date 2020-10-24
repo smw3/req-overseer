@@ -47,7 +47,7 @@ def resolve_ship_simple(type_id):
     
     new_dict = {}
     new_dict["name"] = type_dict["name"]
-    new_dict["type"] = resolve_group_id(type_dict["group_id"])
+    new_dict["type"] = resolve_group_id(type_dict["group_id"])["name"]
         
     return new_dict
 
