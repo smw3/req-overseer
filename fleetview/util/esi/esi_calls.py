@@ -27,7 +27,7 @@ def esi_request(endpoint, public = False):
         return req.json() 
     elif req.status_code == 403:
         if get_access_token():
-            esi_request(endpoint, public = public)
+            return esi_request(endpoint, public = public)
     else:
         logger.error("ESI Request got unexpected response: ")
         logger.error(req.status_code)
