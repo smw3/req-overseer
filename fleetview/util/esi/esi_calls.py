@@ -23,6 +23,7 @@ def esi_request(endpoint, public = False):
     req = requests.get(url, headers = headers, params = body)
     
     if req.status_code == 200:
+        app.logger.info("  : " + str(req.json()))
         return req.json() 
     elif req.status_code == 403:
         if get_access_token():
