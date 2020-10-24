@@ -41,3 +41,20 @@ def get_character_fleet():
 def get_fleet_members():
     fleet_id = get_character_fleet()["fleet_id"]
     return esi_request(f"fleets/{fleet_id}/members")
+
+def resolve_type_id_to_name(type_id):
+    return esi_request(f"universe/types/{type_id}/", public = True)["name"]
+
+def resolve_corporation_id_to_name(corporation_id):
+    return esi_request(f"corporations/{corporation_id}/", public = True)["name"]
+
+def resolve_alliance_id_to_name(alliance_id):
+    return esi_request(f"alliance/{alliance_id}/", public = True)["name"]
+
+def resolve_character_id(character_id):
+    out_dict = {}
+    esi_dict = esi_request(f"characters/{character_id}/", public = True)
+    out_dict["name"] = esi_dict["name"]
+    out_dict["corp"] = resolve_corporation_id_to_name(esi_dict["corporation_id"])
+    out_dict["alliance"] = resolve_alliance_id_to_name(esi_dict["alliance_id"])
+    return out_dict

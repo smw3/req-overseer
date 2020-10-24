@@ -1,9 +1,9 @@
 from flask import Flask, redirect, request, url_for
 
 from ..fleetview import app
-from ..util.esi.esi_manager import requires_auth, get_auth_url, fetch_access_token
-from ..util.esi.esi_calls import get_fleet_members
-from ..util.esi.esi_error import CharacterNotInFleetError
+from ..util.esi.esi_manager import requires_auth
+from ..util.esi.esi_calls import get_fleet_members, resolve_character_id
+from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError
 
 import logging
 
@@ -14,6 +14,12 @@ logger = logging.getLogger(__name__)
 @requires_auth
 def current_fleet():    
     try:
-        return str(get_fleet_members())
+        out = { "members" : [] }
+        for member in get_fleet_members():
+            out["members"].add(resolve_character_id(member["character_id"]))
+                               
+        return str(out)    
     except CharacterNotInFleetError:
-        return {}
+        return "Not in a fleet!"
+    except CharacterNotFCError:
+        return "You are not the FC!"
