@@ -32,3 +32,75 @@ def current_fleet():
         return "Not in a fleet!"
     except CharacterNotFCError:
         return "You are not the FC!"
+    
+    
+    
+@app.route('/api/mock/fleet')
+def current_fleet_mock():
+    return '''{
+	"members": [
+		{
+			"character_id": 1581768186,
+			"join_time": "2020-10-24T17:32:56Z",
+			"role": "fleet_commander",
+			"role_name": "Fleet Commander (Boss)",
+			"ship_type_id": 670,
+			"solar_system_id": 30002619,
+			"squad_id": -1,
+			"takes_fleet_warp": true,
+			"wing_id": -1,
+			"name": "IHaveAShortName",
+			"corp": "Pipebomb Pinata",
+			"alliance": "Requiem Eternal",
+			"solar_system_name": "6E-MOW",
+			"ship_info": {
+				"name": "Capsule",
+				"type": "Capsule"
+			}
+		},
+		{
+			"character_id": 1581768186,
+			"join_time": "2020-10-24T17:32:56Z",
+			"role": "fleet_commander",
+			"role_name": "Fleet Commander (Boss)",
+			"ship_type_id": 670,
+			"solar_system_id": 30002619,
+			"squad_id": -1,
+			"takes_fleet_warp": true,
+			"wing_id": -1,
+			"name": "IHaveAShortName",
+			"corp": "Pipebomb Pinata",
+			"alliance": "Requiem Eternal",
+			"solar_system_name": "6E-MOW",
+			"ship_info": {
+				"name": "Capsule",
+				"type": "Capsule"
+			}
+		},
+		{
+			"character_id": 1581768186,
+			"join_time": "2020-10-24T17:32:56Z",
+			"role": "fleet_commander",
+			"role_name": "Fleet Commander (Boss)",
+			"ship_type_id": 670,
+			"solar_system_id": 30002619,
+			"squad_id": -1,
+			"takes_fleet_warp": true,
+			"wing_id": -1,
+			"name": "IHaveAShortName",
+			"corp": "Pipebomb Pinata",
+			"alliance": "Requiem Eternal",
+			"solar_system_name": "6E-MOW",
+			"ship_info": {
+				"name": "Capsule",
+				"type": "Capsule"
+			}
+		}
+	],
+	"fleet_comp": {
+		"Capsule": 3
+	},
+	"ships": {
+		"Capsule": 3
+	}
+}'''
