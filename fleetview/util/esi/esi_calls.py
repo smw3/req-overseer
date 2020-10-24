@@ -49,7 +49,7 @@ def resolve_corporation_id_to_name(corporation_id):
     return esi_request(f"corporations/{corporation_id}/", public = True)["name"]
 
 def resolve_alliance_id_to_name(alliance_id):
-    return esi_request(f"alliance/{alliance_id}/", public = True)["name"]
+    return esi_request(f"alliances/{alliance_id}/", public = True)["name"]
 
 def resolve_character_id(character_id):
     out_dict = {}
