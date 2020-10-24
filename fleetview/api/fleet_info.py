@@ -18,9 +18,9 @@ def current_fleet():
             
             ship_info = resolve_type_id(member_dict["ship_type_id"])
             member_dict["ship_info"] = ship_info
-            out["members"].append()
+            out["members"].append(member_dict)
                                
-        return str(get_fleet_members())    
+        return str(out)    
     except CharacterNotInFleetError:
         return "Not in a fleet!"
     except CharacterNotFCError:
