@@ -1,14 +1,11 @@
+from ...fleetview import app
+
 from functools import wraps
 from flask import session, request, redirect, url_for
 import requests
 import time
 
 from .esi_error import ESIError, check_response
-
-import logging
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 CLIENT_ID = "34ff20b9719a4cad93cf30e433594150"
 LOCAL_ADDRESS = "18.222.147.238"

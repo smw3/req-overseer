@@ -1,14 +1,11 @@
+from ...fleetview import app
+
 import requests
 from .esi_error import check_response
 from .esi_manager import get_access_token, get_character_id
 from .esi_error import ESIError
 
 import cachetools.func
-
-import logging
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 def esi_request(endpoint, public = False):    
     url = "https://esi.evetech.net/latest/" + endpoint
@@ -21,7 +18,7 @@ def esi_request(endpoint, public = False):
     body = {}
     body['datasource'] = "tranquility"
     
-    logger.info("ESI: " + url)
+    app.logger.info("ESI: " + url)
     
     req = requests.get(url, headers = headers, params = body)
     
@@ -31,9 +28,9 @@ def esi_request(endpoint, public = False):
         if get_access_token():
             return esi_request(endpoint, public = public)
     else:
-        logger.error("ESI Request got unexpected response: ")
-        logger.error(req.status_code)
-        logger.error(req.text)
+        app.logger.error("ESI Request got unexpected response: ")
+        app.logger.error(req.status_code)
+        app.logger.error(req.text)
         check_response(req) 
 
 def get_character_fleet():
