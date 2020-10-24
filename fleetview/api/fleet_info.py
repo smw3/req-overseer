@@ -9,7 +9,7 @@ from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError
 @requires_auth
 def current_fleet():    
     try:
-        out = { "members" : [] }
+        out = { "members" : [], "fleet_comp": [], "ships": [] }
         for member in get_fleet_members():
             member_dict = resolve_character_id(member["character_id"])
             member_dict = {**member, **member_dict}
@@ -18,7 +18,14 @@ def current_fleet():
             
             ship_info = resolve_ship_simple(member_dict["ship_type_id"])
             member_dict["ship_info"] = ship_info
+            
+            # add ship type to fleet comp
+            out["fleet_comp"][ship_info["type"]] = out["fleet_comp"].get(ship_info["type"],0) + 1
+            out["ships"][ship_info["type"]] = out["ships"].get(ship_info["name"],0) + 1    
+
             out["members"].append(member_dict)
+            
+        
                                
         return str(out)    
     except CharacterNotInFleetError:
