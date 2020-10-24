@@ -2,7 +2,7 @@ from flask import Flask, redirect, request, url_for
 
 from ..fleetview import app
 from ..util.esi.esi_manager import requires_auth
-from ..util.esi.esi_calls import get_fleet_members, resolve_character_id, resolve_solar_system_id_to_name, resolve_ship_type_id
+from ..util.esi.esi_calls import get_fleet_members, resolve_character_id, resolve_solar_system_id_to_name, resolve_type_id
 from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError
 
 @app.route('/api/fleet')
@@ -16,7 +16,7 @@ def current_fleet():
             
             member_dict["solar_system_name"] = resolve_solar_system_id_to_name(member_dict["solar_system_id"])
             
-            ship_info = resolve_ship_type_id(member_dict["ship_type_id"])
+            ship_info = resolve_type_id(member_dict["ship_type_id"])
             member_dict["ship_info"] = ship_info
             out["members"].append()
                                
