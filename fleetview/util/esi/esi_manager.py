@@ -23,8 +23,7 @@ def get_character_id():
     if "character_id" in session and is_authenticated():
         return session['character_id']
     
-    logger.warn(get_char_info())
-    session['character_id'] = get_char_info()['character_id']
+    session['character_id'] = get_char_info()['CharacterID']
     return session['character_id']
     
 def get_char_info():
