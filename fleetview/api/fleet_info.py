@@ -13,7 +13,7 @@ def current_fleet():
         for member in get_fleet_members():
             out["members"].append(resolve_character_id(member["character_id"]))
                                
-        return str(out)    
+        return str(get_fleet_members())    
     except CharacterNotInFleetError:
         return "Not in a fleet!"
     except CharacterNotFCError:
