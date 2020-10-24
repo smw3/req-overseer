@@ -15,6 +15,7 @@ def index():
     return "Hello world"
 
 @app.route('/show_fleet')
+@requires_auth
 def show_fleet():    
     return render_template('show_fleet.html')
 
