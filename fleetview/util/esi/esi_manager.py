@@ -6,7 +6,7 @@ import time
 from .esi_error import ESIError
 
 CLIENT_ID = "34ff20b9719a4cad93cf30e433594150"
-LOCAL_ADDRESS = "[2a02:8109:b40:30e8:8cab:289f:3d92:2804]"
+LOCAL_ADDRESS = "172.31.34.28"
 LOCAL_PORT = "5000"
 
 SCOPES = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
