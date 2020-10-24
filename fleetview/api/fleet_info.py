@@ -16,7 +16,7 @@ def current_fleet():
             
             member_dict["solar_system_name"] = resolve_solar_system_id_to_name(member_dict["solar_system_id"])
             
-            ship_info = resolve_ship_simple(member_dict["ship_type_id"])
+            ship_info = resolve_ship_simple(member_dict["ship_type_id"])["name"]
             member_dict["ship_info"] = ship_info
             out["members"].append(member_dict)
                                
