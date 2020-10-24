@@ -41,15 +41,22 @@ def get_fleet_members():
     fleet_id = get_character_fleet()["fleet_id"]
     return esi_request(f"fleets/{fleet_id}/members")
 
-@cachetools.func.ttl_cache(maxsize=128, ttl=480 * 60 * 60)
 def resolve_type_id_to_name(type_id):
-    return esi_request(f"universe/types/{type_id}/", public = True)["name"]
+    return resolve_type_id(type_id)["name"]
 
-@cachetools.func.ttl_cache(maxsize=128, ttl=48 * 60 * 60)
+@cachetools.func.ttl_cache(maxsize=128, ttl=480 * 60 * 60)
+def resolve_type_id(type_id):
+    return esi_request(f"universe/types/{type_id}/", public = True)
+
+@cachetools.func.ttl_cache(maxsize=128, ttl=480 * 60 * 60)
+def resolve_solar_system_id_to_name(system_id):
+    return esi_request(f"universe/systems/{system_id}/", public = True)["name"]
+
+@cachetools.func.ttl_cache(maxsize=128, ttl=480 * 60 * 60)
 def resolve_corporation_id_to_name(corporation_id):
     return esi_request(f"corporations/{corporation_id}/", public = True)["name"]
 
-@cachetools.func.ttl_cache(maxsize=128, ttl=48 * 60 * 60)
+@cachetools.func.ttl_cache(maxsize=128, ttl=480 * 60 * 60)
 def resolve_alliance_id_to_name(alliance_id):
     return esi_request(f"alliances/{alliance_id}/", public = True)["name"]
 
