@@ -1,5 +1,7 @@
 $(document).ready(function(){
-	$.getJSON('/api/fleet', function (data) {
+	console.log("ready");
+	$.getJSON('/api/mock/fleet', function (data) {
+		console.log("json");
 		console.log(data);
 		var member_table = $('<table>').attr('class','table');
 		member_table.append(

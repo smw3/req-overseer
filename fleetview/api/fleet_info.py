@@ -1,4 +1,5 @@
 from flask import Flask, redirect, request, url_for
+import json
 
 from ..fleetview import app
 from ..util.esi.esi_manager import requires_auth
@@ -12,7 +13,7 @@ def current_fleet():
         out = { "members" : [], "fleet_comp": {}, "ships": {} }
         for member in get_fleet_members():
             member_dict = resolve_character_id(member["character_id"])
-            member_dict = {**member, **member_dict}
+            member_dict = { **member, **member_dict }
             
             member_dict["solar_system_name"] = resolve_solar_system_id_to_name(member_dict["solar_system_id"])
             
@@ -24,10 +25,8 @@ def current_fleet():
             out["ships"][ship_info["type"]] = out["ships"].get(ship_info["name"],0) + 1    
 
             out["members"].append(member_dict)
-            
-        
                                
-        return str(out)    
+        return json.dumps(out)    
     except CharacterNotInFleetError:
         return "Not in a fleet!"
     except CharacterNotFCError:
