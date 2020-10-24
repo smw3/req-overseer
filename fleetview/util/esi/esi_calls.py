@@ -29,10 +29,10 @@ def esi_request(endpoint, public = False):
         if get_access_token():
             esi_request(endpoint, public = public)
     else:
-        logger.warn(f"Return code {req.status_code} for request {endpoint}")
-        logger.warn(req.text)
-        
-        raise ESIError(req.status_code, req)  
+        logger.error("ESI Request got unexpected response: ")
+        logger.error(req.status_code)
+        logger.error(req.text)
+        check_response(req) 
 
 def get_character_fleet():
     character_id = get_character_id()
