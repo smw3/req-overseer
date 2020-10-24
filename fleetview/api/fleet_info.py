@@ -14,6 +14,6 @@ logger = logging.getLogger(__name__)
 @requires_auth
 def current_fleet():    
     try:
-        return get_fleet_members()
+        return str(get_fleet_members())
     except CharacterNotInFleetError:
         return {}
