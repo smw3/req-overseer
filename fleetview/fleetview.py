@@ -1,6 +1,11 @@
+import logging
 from flask import Flask, redirect, request, url_for, render_template
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'I am a long string with no measfkasf'    
+
+gunicorn_logger = logging.getLogger('gunicorn.error')
+app.logger.handlers = gunicorn_logger.handlers
+app.logger.setLevel(gunicorn_logger.level)
 
 from .util.esi.esi_manager import requires_auth, get_auth_url, fetch_access_token
 from .api.fleet_info import current_fleet
