@@ -38,6 +38,9 @@ function updateFleetView() {
 							$('<i>').attr('class','fas fa-sort'))),
 					$('<th>').text('Type').append(
 						$('<span>').attr("class","icon").append(
+							$('<i>').attr('class','fas fa-sort')))),
+					$('<th>').text('Location').append(
+						$('<span>').attr("class","icon").append(
 							$('<i>').attr('class','fas fa-sort'))))));
 							
 		var member_table_body = $('<tbody>');
@@ -46,6 +49,7 @@ function updateFleetView() {
 			row.append($('<td>').text(value["name"]));
 			row.append($('<td>').text(value["ship_info"]["name"]));
 			row.append($('<td>').text(value["ship_info"]["type"]));
+			row.append($('<td>').text(value["solar_system_name"]));
 			member_table_body.append(row);
 		});
 		member_table.append(member_table_body);
