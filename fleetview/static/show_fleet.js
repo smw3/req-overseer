@@ -15,12 +15,15 @@ function updateFleetView() {
 	$.getJSON('/api/fleet', function (data) {
 		if (handleError(data)) {
 			$("#loading_indicator").remove();
+			$("#members").empty();
+			$("#fleetcomp").empty();
+			$("#ships").empty();
 			return;
 		}
 		
 		var today = new Date();
 		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-		$("#last_refresh_time").text(time)
+		$("#last_refresh_time").text("<strong>Last updated: " + time + "</strong>")
 		
 		var member_table = $('<table>').attr('class','table');
 		member_table.append(
