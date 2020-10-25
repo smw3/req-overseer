@@ -52,7 +52,7 @@ def current_fleet():
     
 def save_fleet_scan(fleet_scan, char_id):
     base_path = config["DEFAULT"]["LIVE_SHARE"]
-    livescan_path = base_path + "/" + char_id + "/" + "live_scan.json"
+    livescan_path = f"{base_path}/{char_id}/live_scan.json"
     
     os.mkdir(base_path + "/" + char_id)
     
@@ -62,7 +62,7 @@ def save_fleet_scan(fleet_scan, char_id):
 @app.route('/api/shared_fleet/<sharer_char_id>')
 def shared_fleet(sharer_char_id):
     base_path = config["DEFAULT"]["LIVE_SHARE"]
-    livescan_path = base_path + "/" + sharer_char_id + "/" + "live_scan.json"
+    ivescan_path = f"{base_path}/{sharer_char_id}/live_scan.json"
     
     if os.path.exists(livescan_path):
         fleet_scan = json.load( open( livescan_path ) )
