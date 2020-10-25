@@ -102,5 +102,6 @@ function updateFleetView() {
 }
 
 $(document).ready(function(){
+	updateFleetView();
 	var myVar = setInterval(updateFleetView, 1000 * 60);
 });
