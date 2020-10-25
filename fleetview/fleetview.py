@@ -7,17 +7,22 @@ gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers
 app.logger.setLevel(gunicorn_logger.level)
 
-from .util.esi.esi_manager import requires_auth, get_auth_url, fetch_access_token
+from .util.esi.esi_manager import requires_auth, get_auth_url, fetch_access_token, is_authenticated
 from .api.fleet_info import current_fleet, current_fleet_mock
 
 @app.route('/')
 def index():    
-    return "Hello world"
+    return redirect(url_for('show_fleet'))
 
 @app.route('/show_fleet')
-@requires_auth
 def show_fleet():    
-    return render_template('show_fleet.html')
+    return render_template('show_fleet.html', 
+                           authed = is_authenticated())
+
+@app.route('/show_snapshots')
+def show_snapshots():    
+    return render_template('show_snapshots.html', 
+                           authed = is_authenticated())
 
 @app.route('/auth', methods=['GET'])
 def auth():

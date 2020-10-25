@@ -4,10 +4,9 @@ import json
 from ..fleetview import app
 from ..util.esi.esi_manager import requires_auth
 from ..util.esi.esi_calls import get_fleet_members, resolve_character_id, resolve_solar_system_id_to_name, resolve_ship_simple
-from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError
+from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError, NotAuthedError
 
 @app.route('/api/fleet')
-@requires_auth
 def current_fleet():    
     try:
         out = { "members" : [], "fleet_comp": {}, "ships": {} }
@@ -31,6 +30,8 @@ def current_fleet():
         return '{"error": "You are not in a fleet!"}'
     except CharacterNotFCError:
         return '{"error": "You need to be the FC!"}'
+    except NotAuthedError:
+        return '{"error": "You need to auth first!" }'
     
     
     

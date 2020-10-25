@@ -21,4 +21,7 @@ class CharacterNotInFleetError(ESIError):
 
 class CharacterNotFCError(ESIError):
     pass
+
+class NotAuthedError(Exception):
+    pass
     

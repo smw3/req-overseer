@@ -5,7 +5,7 @@ from flask import session, request, redirect, url_for
 import requests
 import time
 
-from .esi_error import ESIError, check_response
+from .esi_error import ESIError, check_response, NotAuthedError
 
 CLIENT_ID = "34ff20b9719a4cad93cf30e433594150"
 LOCAL_ADDRESS = "18.222.147.238"
@@ -63,6 +63,9 @@ def fetch_access_token(client_code = None, refresh = False):
         body['grant_type'] = "refresh_token"
         body['refresh_token'] = session['access_token']['refresh_token']
     else:
+        if client_code is None:
+            raise NotAuthedError()
+            
         body['grant_type'] = "authorization_code"
         body['code'] = client_code
     
