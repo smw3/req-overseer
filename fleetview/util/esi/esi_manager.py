@@ -13,7 +13,7 @@ CLIENT_ID = "34ff20b9719a4cad93cf30e433594150"
 LOCAL_ADDRESS = "18.222.147.238"
 LOCAL_PORT = "80"
 
-SCOPES = ["esi-fleets.read_fleet.v1", "esi-fleets.write_fleet.v1"]
+SCOPES = ["esi-fleets.read_fleet.v1"]
 
 def is_authenticated():
     return "access_token" in session and session['access_token'] is not None
