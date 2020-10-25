@@ -1,7 +1,15 @@
 import logging
+import configparser
 from flask import Flask, redirect, request, url_for, render_template, session
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'I am a long string with no measfkasf'    
+app.config['BETA'] = True
+
+config = configparser.ConfigParser()
+if app.config['BETA']:
+    config.read('/var/conf/fleetview/beta.conf')
+else:
+    config.read('/var/conf/fleetview/live.conf')
 
 gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers
@@ -9,6 +17,11 @@ app.logger.setLevel(gunicorn_logger.level)
 
 from .util.esi.esi_manager import requires_auth, get_auth_url, fetch_access_token, is_authenticated, get_authed_info
 from .api.fleet_info import current_fleet, current_fleet_mock
+
+def is_beta():
+    return app.config['BETA']
+
+app.jinja_env.globals.update(is_beta=is_beta)
 
 @app.route('/')
 def index():    

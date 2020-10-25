@@ -1,17 +1,23 @@
-from ...fleetview import app
+from ...fleetview import app, config
 
 from functools import wraps
 from flask import session, request, redirect, url_for
 import requests
 import time
+import base64
 
 import cachetools.func
+import configparser
 
 from .esi_error import ESIError, check_response, NotAuthedError
 
-CLIENT_ID = "34ff20b9719a4cad93cf30e433594150"
-LOCAL_ADDRESS = "18.222.147.238"
-LOCAL_PORT = "80"
+
+
+CLIENT_ID = config['DEFAULT']['CLIENT_ID']
+auth_string = CLIENT_ID + ":" + config['DEFAULT']['SECRET_KEY']
+AUTHORIZATION = base64.b64encode(auth_string.encode('ascii')).decode('ascii')
+LOCAL_ADDRESS = config['DEFAULT']['LOCAL_ADDRESS']
+LOCAL_PORT = config['DEFAULT']['LOCAL_PORT']
 
 SCOPES = ["esi-fleets.read_fleet.v1"]
 
@@ -63,7 +69,7 @@ def fetch_access_token(client_code = None, refresh = False):
     SSO_ACCESS_TOKEN_URL = "https://login.eveonline.com/oauth/token"
     headers = {}
     headers['Content-Type'] = "application/x-www-form-urlencoded"
-    headers['Authorization'] = "Basic MzRmZjIwYjk3MTlhNGNhZDkzY2YzMGU0MzM1OTQxNTA6c0ZiTWtla0JyZFhpWlhQOVJvT05EU1gzeTdNWnJ5M2tiazc0d0pOSA=="
+    headers['Authorization'] = "Basic " + AUTHORIZATION
     headers['User-Agent'] = "Requiem Eternal Fleetview"
     
     body = {}
