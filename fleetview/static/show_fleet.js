@@ -87,5 +87,7 @@ $(document).ready(function(){
 		
 		$("#ships").append(ships_table);
 		ships_table.tablesort();
+		
+		$("#loading_indicator").remove();
 	});
 });
