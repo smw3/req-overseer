@@ -114,12 +114,12 @@ function toggleSharing() {
 	if (sharing) {
 		sharing = false;
 		$( "#share_button" ).text("Start Sharing").removeClass("is-danger");
-		$( "#share_password" ).prop( "disabled", false );
+		$( "#share_participants" ).prop( "disabled", false );
 		$( "#share_link" ).html("");
 	} else {
 		sharing = true;
 		$( "#share_button" ).text(" Stop Sharing").addClass("is-danger");
-		$( "#share_password" ).prop( "disabled", true );
+		$( "#share_participants" ).prop( "disabled", true );
 		$( "#share_link" ).html("Sharing at <a href=\"/show_shared/" + authedCharId + "\">LINK</a>");
 	}
 }
