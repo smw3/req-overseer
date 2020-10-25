@@ -19,14 +19,14 @@ def show_fleet():
     return render_template('show_fleet.html',
                            auth_url = url_for('auth', next=url_for('show_fleet')),
                            authed = is_authenticated(),
-                           authed_info = str(get_authed_info()))
+                           authed_info = get_authed_info())
 
 @app.route('/show_snapshots')
 def show_snapshots():    
     return render_template('show_snapshots.html', 
                            auth_url = url_for('auth', next=url_for('show_snapshots')),
                            authed = is_authenticated(),
-                           authed_info = str(get_authed_info()))
+                           authed_info = get_authed_info())
 
 @app.route('/unauth')
 def unauth(): 
@@ -36,7 +36,7 @@ def unauth():
                            message = "Unauthed!",
                            auth_url = url_for('auth', next=url_for('show_fleet')),
                            authed = is_authenticated(),
-                           authed_info = str(get_authed_info()))
+                           authed_info = get_authed_info())
 
 @app.route('/auth', methods=['GET'])
 def auth():
