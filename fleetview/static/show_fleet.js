@@ -24,7 +24,7 @@ function updateFleetView() {
 		
 		var today = new Date();
 		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-		$("#last_refresh_time").text("<strong>Last updated: " + time + "</strong>")
+		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>")
 		
 		var member_table = $('<table>').attr('class','table');
 		member_table.append(
@@ -38,10 +38,10 @@ function updateFleetView() {
 							$('<i>').attr('class','fas fa-sort'))),
 					$('<th>').text('Type').append(
 						$('<span>').attr("class","icon").append(
-							$('<i>').attr('class','fas fa-sort')))),
+							$('<i>').attr('class','fas fa-sort'))),
 					$('<th>').text('Location').append(
 						$('<span>').attr("class","icon").append(
-							$('<i>').attr('class','fas fa-sort')))));
+							$('<i>').attr('class','fas fa-sort'))))));
 							
 		var member_table_body = $('<tbody>');
 		$.each(data["members"], function (index, value) {
