@@ -1,4 +1,4 @@
-from ...fleetview import app
+from ...fleetview import app, config
 
 from functools import wraps
 from flask import session, request, redirect, url_for
@@ -11,8 +11,7 @@ import configparser
 
 from .esi_error import ESIError, check_response, NotAuthedError
 
-config = configparser.ConfigParser()
-config.read('/var/conf/fleetview/beta.conf') # live.conf
+
 
 CLIENT_ID = config['DEFAULT']['CLIENT_ID']
 auth_string = CLIENT_ID + ":" + config['DEFAULT']['SECRET_KEY']

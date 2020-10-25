@@ -68,3 +68,11 @@
 	{% endif %}
   </div>
 </nav>
+
+{% if is_beta() %}
+<div class="container is-fluid">
+  <div class="notification has-background-danger">
+    Work in progress beta version, errors and frequent unavailability expected.
+  </div>
+</div>
+{% endif %}
