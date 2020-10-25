@@ -14,7 +14,7 @@ function handleError(data) {
 }
 
 function updateFleetView() {
-	$.getJSON('/api/shared_fleet/{{ share_id }}'), function (data) {
+	$.getJSON('/api/shared_fleet/' + share_id), function (data) {
 		if (handleError(data)) {
 			$("#loading_indicator").remove();
 			$("#members").empty();
