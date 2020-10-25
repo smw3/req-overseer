@@ -25,7 +25,7 @@ function updateFleetView() {
 		
 		var today = new Date();
 		var time = data["last_refresh"];
-		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>")
+		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>");
 		
 		var member_table = $('<table>').attr('class','table');
 		member_table.append(
