@@ -1,4 +1,5 @@
 function handleError(data) {
+	$("#errors").empty();
 	if (data.hasOwnProperty("error")) {
 		$("#errors").append(
 			$("<div>").attr("class", "container").append(
