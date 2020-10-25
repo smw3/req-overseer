@@ -28,9 +28,9 @@ def current_fleet():
                                
         return json.dumps(out)    
     except CharacterNotInFleetError:
-        return "Not in a fleet!"
+        return '{"error": "You are not in a fleet!"}'
     except CharacterNotFCError:
-        return "You are not the FC!"
+        return '{"error": "You need to be the FC!"}'
     
     
     

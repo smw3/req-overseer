@@ -1,8 +1,23 @@
+function handleError(data) {
+	if (data.hasOwnProperty("error")) {
+		$("#errors").append(
+			$("<div>").attr("class", "container").append(
+				$("<div>").attr("class", "notification is-primary").text(data["error"])
+			)
+		);
+		return true;
+	}
+	return false;
+}
+
 $(document).ready(function(){
 	console.log("ready");
-	$.getJSON('/api/fleet', function (data) {
+	$.getJSON('/api/mock/fleet', function (data) {
 		console.log("json");
 		console.log(data);
+		if (handleError(data)) {
+			return;
+		}
 		var member_table = $('<table>').attr('class','table');
 		member_table.append(
 			$('<tr>').append(
