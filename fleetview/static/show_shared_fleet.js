@@ -14,7 +14,7 @@ function handleError(data) {
 }
 
 function updateFleetView() {
-	$.getJSON('/api/shared_fleet/' + share_id), function (data) {
+	$.getJSON('/api/shared_fleet/' + share_id, function (data) {
 		if (handleError(data)) {
 			$("#loading_indicator").remove();
 			$("#members").empty();
@@ -23,7 +23,6 @@ function updateFleetView() {
 			return;
 		}
 		
-		var today = new Date();
 		var time = data["last_refresh"];
 		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>");
 		
@@ -113,6 +112,4 @@ function updateFleetView() {
 $(document).ready(function(){
 	updateFleetView();
 	var myVar = setInterval(updateFleetView, 1000 * 60);
-	
-	
 });
