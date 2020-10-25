@@ -30,8 +30,10 @@ def show_snapshots():
 
 @app.route('/unauth')
 def unauth(): 
-    if access_token in session:
+    if 'access_token' in session:
         del session['access_token']
+    if 'access_token_time' in session:
+        del session['access_token_time']
     
     return render_template('generic.html', 
                            message = "Unauthed!",
