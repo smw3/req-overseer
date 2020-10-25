@@ -13,7 +13,10 @@ from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError, 
 @app.route('/api/fleet')
 def current_fleet(): 
     share = request.args.get('sharing', default="false") == "true"
-    allowed_participants = ",".split(urllib.parse.unquote(request.args.get('participants')))
+    try: 
+        allowed_participants = ",".split(urllib.parse.unquote(request.args.get('participants')))
+    except:
+        allowed_participants = []
     
     try:
         out = { "members" : [], "fleet_comp": {}, "ships": {} }
