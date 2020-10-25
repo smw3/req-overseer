@@ -2,7 +2,7 @@ from flask import Flask, redirect, request, url_for
 import json
 
 from ..fleetview import app
-from ..util.esi.esi_manager import requires_auth
+from ..util.esi.esi_manager import get_char_info
 from ..util.esi.esi_calls import get_fleet_members, resolve_character_id, resolve_solar_system_id_to_name, resolve_ship_simple
 from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError, NotAuthedError
 
@@ -10,6 +10,7 @@ from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError, 
 def current_fleet():    
     try:
         out = { "members" : [], "fleet_comp": {}, "ships": {} }
+        app.logger.info("Query fleet under " + get_char_info()["name"])
         for member in get_fleet_members():
             member_dict = resolve_character_id(member["character_id"])
             member_dict = { **member, **member_dict }
