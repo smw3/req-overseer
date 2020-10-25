@@ -14,7 +14,7 @@ function handleError(data) {
 }
 
 function updateFleetView() {
-	$.getJSON('/api/fleet?sharing=' + sharing + '&password=' + $( "#share_password" ).val(), function (data) {
+	$.getJSON('/api/fleet?sharing=' + sharing + '&password=' + encodeURIComponent($( "#share_participants" ).val()), function (data) {
 		if (handleError(data)) {
 			$("#loading_indicator").remove();
 			$("#members").empty();
@@ -122,6 +122,10 @@ function toggleSharing() {
 		$( "#share_password" ).prop( "disabled", true );
 		$( "#share_link" ).html("Sharing at <a href=\"/show_shared/" + authedCharId + "\">LINK</a>");
 	}
+}
+
+function addShareParticipant() {
+	
 }
 
 $(document).ready(function(){
