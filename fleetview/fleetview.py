@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, redirect, request, url_for, render_template
+from flask import Flask, redirect, request, url_for, render_template, session
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'I am a long string with no measfkasf'    
 
@@ -16,12 +16,23 @@ def index():
 
 @app.route('/show_fleet')
 def show_fleet():    
-    return render_template('show_fleet.html', 
+    return render_template('show_fleet.html',
+                           auth_url = url_for('auth', next=url_for('show_fleet'))
                            authed = is_authenticated())
 
 @app.route('/show_snapshots')
 def show_snapshots():    
     return render_template('show_snapshots.html', 
+                           auth_url = url_for('auth', next=url_for('show_snapshots'))
+                           authed = is_authenticated())
+
+@app.route('/unauth')
+def unauth(): 
+    del session['access_token']
+    
+    return render_template('generic.html', 
+                           message = "Unauthed!",
+                           auth_url = url_for('auth', next=url_for('show_fleet'))
                            authed = is_authenticated())
 
 @app.route('/auth', methods=['GET'])
