@@ -41,7 +41,7 @@ function updateFleetView() {
 							$('<i>').attr('class','fas fa-sort')))),
 					$('<th>').text('Location').append(
 						$('<span>').attr("class","icon").append(
-							$('<i>').attr('class','fas fa-sort'))))));
+							$('<i>').attr('class','fas fa-sort')))));
 							
 		var member_table_body = $('<tbody>');
 		$.each(data["members"], function (index, value) {
