@@ -29,9 +29,9 @@ def current_fleet():
     except CharacterNotInFleetError:
         return '{"error": "You are not in a fleet!"}'
     except CharacterNotFCError:
-        return '{"error": "You need to be the FC!"}'
+        return '{"error": "The fleet does not exist or you don\'t have access to it! Are you the FC?"}'
     except NotAuthedError:
-        return '{"error": "You need to auth first!" }'
+        return '{"error": "You need to authenticate first!" }'
     
     
     
