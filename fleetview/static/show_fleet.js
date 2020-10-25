@@ -118,7 +118,7 @@ function toggleSharing() {
 		$( "#share_link" ).html("");
 	} else {
 		sharing = true;
-		$( "#share_button" ).text("Sharing...").addClass("is-danger");
+		$( "#share_button" ).text(" Stop Sharing").addClass("is-danger");
 		$( "#share_password" ).prop( "disabled", true );
 		$( "#share_link" ).html("Sharing at <a href=\"/show_shared/" + authedCharId + "\">LINK</a>");
 	}
