@@ -68,6 +68,9 @@ def fetch_access_token(client_code = None, refresh = False):
     
     body = {}
     if refresh:
+        if 'access_token' not in session:
+            raise NotAuthedError()
+            
         body['grant_type'] = "refresh_token"
         body['refresh_token'] = session['access_token']['refresh_token']
     else:
