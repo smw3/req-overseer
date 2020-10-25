@@ -15,7 +15,7 @@ from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError, 
 def current_fleet(): 
     share = request.args.get('sharing', default="false") == "true"
     try: 
-        allowed_participants = ",".split(urllib.parse.unquote(request.args.get('participants')))
+        allowed_participants = urllib.parse.unquote(request.args.get('participants')).split(",")
     except:
         allowed_participants = []
     
