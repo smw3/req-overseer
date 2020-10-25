@@ -10,12 +10,18 @@ function handleError(data) {
 	return false;
 }
 
-$(document).ready(function(){
+
+function updateFleetView() {
 	$.getJSON('/api/fleet', function (data) {
 		if (handleError(data)) {
 			$("#loading_indicator").remove();
 			return;
 		}
+		
+		var today = new Date();
+		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		$("#last_refresh_time").text(time)
+		
 		var member_table = $('<table>').attr('class','table');
 		member_table.append(
 			$('<thead>').append(
@@ -39,8 +45,6 @@ $(document).ready(function(){
 			member_table_body.append(row);
 		});
 		member_table.append(member_table_body);
-		
-		$("#members").append(member_table);
 		member_table.tablesort();
 		
 		var fleetcomp_table = $('<table>').attr('class','table');
@@ -62,8 +66,7 @@ $(document).ready(function(){
 			fleetcomp_table_body.append(row);
 		});
 		fleetcomp_table.append(fleetcomp_table_body);
-		
-		$("#fleetcomp").append(fleetcomp_table);	
+
 		fleetcomp_table.tablesort();		
 				
 		var ships_table = $('<table>').attr('class','table');
@@ -85,10 +88,19 @@ $(document).ready(function(){
 			ships_table_body.append(row);
 		});
 		ships_table.append(ships_table_body);
-		
-		$("#ships").append(ships_table);
 		ships_table.tablesort();
 		
 		$("#loading_indicator").remove();
+		
+		$("#members").empty();
+		$("#members").append(member_table);
+		$("#fleetcomp").empty();
+		$("#fleetcomp").append(fleetcomp_table);
+		$("#ships").empty();
+		$("#ships").append(ships_table);
 	});
+}
+
+$(document).ready(function(){
+	var myVar = setInterval(updateFleetView, 1000 * 60);
 });
