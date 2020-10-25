@@ -57,7 +57,7 @@ def save_fleet_scan(fleet_scan, char_id):
     json.dump( fleet_scan, open( livescan_path, 'w' ) )
     
 @app.route('/api/shared_fleet/<sharer_char_id>')
-def current_fleet_mock(sharer_char_id):
+def shared_fleet(sharer_char_id):
     base_path = config["DEFAULT"]["LIVE_SHARE"]
     livescan_path = base_path + "/" + sharer_char_id + "/" + "live_scan.json"
     

@@ -1,1 +1,1 @@
-gunicorn -w 3 fleetview.fleetview:app -c gunicorn_conf_beta.py
+gunicorn -w 1 fleetview.fleetview:app -c gunicorn_conf_beta.py
