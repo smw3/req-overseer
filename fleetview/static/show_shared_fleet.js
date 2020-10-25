@@ -14,7 +14,7 @@ function handleError(data) {
 }
 
 function updateFleetView() {
-	$.getJSON('/api/fleet?sharing=' + sharing + '&participants=' + encodeURIComponent($( "#share_participants" ).val()), function (data) {
+	$.getJSON('/api/shared_fleet/{{ share_id }}'), function (data) {
 		if (handleError(data)) {
 			$("#loading_indicator").remove();
 			$("#members").empty();
@@ -24,7 +24,7 @@ function updateFleetView() {
 		}
 		
 		var today = new Date();
-		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		var time = data["last_refresh"];
 		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>")
 		
 		var member_table = $('<table>').attr('class','table');
@@ -110,25 +110,7 @@ function updateFleetView() {
 	});
 }
 
-function toggleSharing() {
-	if (sharing) {
-		sharing = false;
-		$( "#share_button" ).text("Start Sharing").removeClass("is-danger");
-		$( "#share_participants" ).prop( "disabled", false );
-		$( "#share_link" ).html("");
-	} else {
-		sharing = true;
-		$( "#share_button" ).text(" Stop Sharing").addClass("is-danger");
-		$( "#share_participants" ).prop( "disabled", true );
-		$( "#share_link" ).html("Sharing at <a href=\"/show_shared/" + authedCharId + "\">LINK</a>");
-	}
-}
-
 $(document).ready(function(){
-	$( "#share_button" ).click(function() {
-		toggleSharing();
-	});
-	
 	updateFleetView();
 	var myVar = setInterval(updateFleetView, 1000 * 60);
 	

@@ -44,6 +44,7 @@ def show_snapshots():
 @app.route('/show_shared/<share_id>')
 def show_shared(share_id):    
     return render_template('show_shared.html', 
+                           share_id = share_id,
                            auth_url = url_for('auth', next=url_for('show_snapshots')),
                            authed = is_authenticated(),
                            authed_info = get_authed_info())
