@@ -10,7 +10,7 @@ from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError, 
 def current_fleet():    
     try:
         out = { "members" : [], "fleet_comp": {}, "ships": {} }
-        app.logger.info("Query fleet under " + get_char_info()["name"])
+        app.logger.info("Query fleet under " + str(get_char_info()))
         for member in get_fleet_members():
             member_dict = resolve_character_id(member["character_id"])
             member_dict = { **member, **member_dict }
