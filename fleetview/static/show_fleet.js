@@ -12,7 +12,7 @@ function handleError(data) {
 
 $(document).ready(function(){
 	console.log("ready");
-	$.getJSON('/api/mock/fleet', function (data) {
+	$.getJSON('/api/fleet', function (data) {
 		console.log("json");
 		console.log(data);
 		if (handleError(data)) {
