@@ -14,7 +14,7 @@ function handleError(data) {
 }
 
 function updateFleetView() {
-	$.getJSON('/api/fleet?sharing=' + sharing, function (data) {
+	$.getJSON('/api/fleet?sharing=' + sharing + '&password=' + $( "#share_password" ).value(), function (data) {
 		if (handleError(data)) {
 			$("#loading_indicator").remove();
 			$("#members").empty();
@@ -114,9 +114,13 @@ function toggleSharing() {
 	if (sharing) {
 		sharing = false;
 		$( "#share_button" ).text("Start Sharing").removeClass("is-danger");
+		$( "#share_password" ).prop( "disabled", false );
+		$( "#share_link" ).html("");
 	} else {
 		sharing = true;
 		$( "#share_button" ).text("Sharing...").addClass("is-danger");
+		$( "#share_password" ).prop( "disabled", true );
+		$( "#share_link" ).html("Sharing at <a href=\"/show_shared/" + authedCharId + "\">LINK</a>");
 	}
 }
 
