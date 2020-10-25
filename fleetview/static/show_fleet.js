@@ -13,6 +13,7 @@ function handleError(data) {
 $(document).ready(function(){
 	$.getJSON('/api/fleet', function (data) {
 		if (handleError(data)) {
+			$("#loading_indicator").remove();
 			return;
 		}
 		var member_table = $('<table>').attr('class','table');
