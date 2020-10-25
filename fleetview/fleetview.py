@@ -17,13 +17,13 @@ def index():
 @app.route('/show_fleet')
 def show_fleet():    
     return render_template('show_fleet.html',
-                           auth_url = url_for('auth', next=url_for('show_fleet'))
+                           auth_url = url_for('auth', next=url_for('show_fleet')),
                            authed = is_authenticated())
 
 @app.route('/show_snapshots')
 def show_snapshots():    
     return render_template('show_snapshots.html', 
-                           auth_url = url_for('auth', next=url_for('show_snapshots'))
+                           auth_url = url_for('auth', next=url_for('show_snapshots')),
                            authed = is_authenticated())
 
 @app.route('/unauth')
@@ -32,7 +32,7 @@ def unauth():
     
     return render_template('generic.html', 
                            message = "Unauthed!",
-                           auth_url = url_for('auth', next=url_for('show_fleet'))
+                           auth_url = url_for('auth', next=url_for('show_fleet')),
                            authed = is_authenticated())
 
 @app.route('/auth', methods=['GET'])
