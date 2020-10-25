@@ -54,7 +54,7 @@ def save_fleet_scan(fleet_scan, char_id):
     base_path = config["DEFAULT"]["LIVE_SHARE"]
     livescan_path = f"{base_path}/{char_id}/live_scan.json"
     
-    os.mkdir(base_path + "/" + char_id)
+    os.mkdir(f"{base_path}/{char_id}")
     
     os.remove(livescan_path)
     json.dump( fleet_scan, open( livescan_path, 'w' ) )
