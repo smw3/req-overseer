@@ -1,3 +1,5 @@
+var sharing = false;
+
 function handleError(data) {
 	$("#errors").empty();
 	if (data.hasOwnProperty("error")) {
@@ -11,9 +13,8 @@ function handleError(data) {
 	return false;
 }
 
-
 function updateFleetView() {
-	$.getJSON('/api/fleet', function (data) {
+	$.getJSON('/api/fleet?sharing=' + sharing, function (data) {
 		if (handleError(data)) {
 			$("#loading_indicator").remove();
 			$("#members").empty();
@@ -109,7 +110,23 @@ function updateFleetView() {
 	});
 }
 
+function toggleSharing() {
+	if (sharing) {
+		sharing = false;
+		$( "#share_button" ).text("Start Sharing").removeClass("is-danger");
+	} else {
+		sharing = true;
+		$( "#share_button" ).text("Sharing...").addClass("is-danger");
+	}
+}
+
 $(document).ready(function(){
+	$( "#share_button" ).click(function() {
+		toggleSharing();
+	});
+	
 	updateFleetView();
 	var myVar = setInterval(updateFleetView, 1000 * 60);
+	
+	
 });

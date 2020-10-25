@@ -41,6 +41,13 @@ def show_snapshots():
                            authed = is_authenticated(),
                            authed_info = get_authed_info())
 
+@app.route('/show_shared/<share_id>')
+def show_shared(share_id):    
+    return render_template('show_shared.html', 
+                           auth_url = url_for('auth', next=url_for('show_snapshots')),
+                           authed = is_authenticated(),
+                           authed_info = get_authed_info())
+
 @app.route('/unauth')
 def unauth(): 
     if 'access_token' in session:

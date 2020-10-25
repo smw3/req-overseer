@@ -9,6 +9,9 @@
   <body class="has-navbar-fixed-top">
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="{{ url_for('static', filename='jquery.tablesort.js') }}"></script>
+	<script>
+		var authedCharId = {{ authed_info.CharacterId }};
+	</script>
 	<script src="{{ url_for('static', filename='show_fleet.js') }}"></script>
 	<script src="https://kit.fontawesome.com/4ac5bc0e9c.js" crossorigin="anonymous"></script>	
 	
@@ -18,6 +21,11 @@
 		<div id="errors">
 		</div>
 		<div id="loading_indicator"><progress class="progress is-large is-info" max="100">60%</progress></div>
+		<div id="share_settings">
+			<input id="share_password" class="input" type="text" placeholder="Share Password">
+			<button id="share_button" class="button">Start Sharing</button>
+			<span id="share_link"></span>
+		</div>
 		<div id="last_refresh_time" class="container"></div>
 		<div class="columns">
 			<div id="members" class="column"></div>		
