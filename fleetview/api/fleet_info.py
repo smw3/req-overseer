@@ -3,12 +3,13 @@ import json
 import configparser
 import urllib.parse
 import os
+from pathlib import Path
 from datetime import datetime
 
 from ..fleetview import app, config
 from ..util.esi.esi_manager import get_char_info, get_character_id
 from ..util.esi.esi_calls import get_fleet_members, resolve_character_id, resolve_solar_system_id_to_name, resolve_ship_simple
-from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError, NotAuthedError
+from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError, NotAuthedError, ESIError
 
 @app.route('/api/fleet')
 def current_fleet(): 
@@ -49,14 +50,15 @@ def current_fleet():
         return '{"error": "The fleet does not exist or you don\'t have access to it! Are you the FC?"}'
     except NotAuthedError:
         return '{"error": "You need to authenticate first!" }'
+    except ESIError:
+        return '{"error": "Unknown ESI issue occured, please try again later." }'
     
 def save_fleet_scan(fleet_scan, char_id):
     base_path = config["DEFAULT"]["LIVE_SHARE"]
     livescan_path = f"{base_path}/{char_id}/live_scan.json"
     
-    os.mkdir(f"{base_path}/{char_id}")
+    Path(f"{base_path}/{char_id}").mkdir(parents=True, exist_ok=True)
     
-    os.remove(livescan_path)
     json.dump( fleet_scan, open( livescan_path, 'w' ) )
     
 @app.route('/api/shared_fleet/<sharer_char_id>')

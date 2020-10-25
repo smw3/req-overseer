@@ -121,6 +121,7 @@ function toggleSharing() {
 		$( "#share_button" ).text(" Stop Sharing").addClass("is-danger");
 		$( "#share_participants" ).prop( "disabled", true );
 		$( "#share_link" ).html("Sharing at <a href=\"/show_shared/" + authedCharId + "\">LINK</a>");
+		updateFleetView();
 	}
 }
 
