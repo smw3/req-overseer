@@ -5,6 +5,8 @@ from flask import session, request, redirect, url_for
 import requests
 import time
 
+import cachetools.func
+
 from .esi_error import ESIError, check_response, NotAuthedError
 
 CLIENT_ID = "34ff20b9719a4cad93cf30e433594150"
@@ -33,6 +35,12 @@ def get_char_info():
     check_response(req)
 
     return req.json()
+
+def get_authed_info():
+    if not is_authenticated():
+        return {}
+    
+    return get_char_info()
         
 def requires_auth(f):
     @wraps(f)

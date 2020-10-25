@@ -60,8 +60,10 @@
 	{% else %}
     <div class="navbar-end">
 	  <p class="navbar-item">
-        Authed as: IHaveAShortName (Requiem Eternal)
+        Authed as: <br>
+		{{ authed_info }}
       </p>
+	  <a class="delete" href="/unauth"></a>
     </div>	
 	{% endif %}
   </div>

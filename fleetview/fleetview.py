@@ -7,7 +7,7 @@ gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers
 app.logger.setLevel(gunicorn_logger.level)
 
-from .util.esi.esi_manager import requires_auth, get_auth_url, fetch_access_token, is_authenticated
+from .util.esi.esi_manager import requires_auth, get_auth_url, fetch_access_token, is_authenticated, get_authed_info
 from .api.fleet_info import current_fleet, current_fleet_mock
 
 @app.route('/')
@@ -18,13 +18,15 @@ def index():
 def show_fleet():    
     return render_template('show_fleet.html',
                            auth_url = url_for('auth', next=url_for('show_fleet')),
-                           authed = is_authenticated())
+                           authed = is_authenticated(),
+                           authed_info = str(get_authed_info()))
 
 @app.route('/show_snapshots')
 def show_snapshots():    
     return render_template('show_snapshots.html', 
                            auth_url = url_for('auth', next=url_for('show_snapshots')),
-                           authed = is_authenticated())
+                           authed = is_authenticated(),
+                           authed_info = str(get_authed_info()))
 
 @app.route('/unauth')
 def unauth(): 
@@ -33,7 +35,8 @@ def unauth():
     return render_template('generic.html', 
                            message = "Unauthed!",
                            auth_url = url_for('auth', next=url_for('show_fleet')),
-                           authed = is_authenticated())
+                           authed = is_authenticated(),
+                           authed_info = str(get_authed_info()))
 
 @app.route('/auth', methods=['GET'])
 def auth():
