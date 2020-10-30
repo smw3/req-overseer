@@ -27,6 +27,7 @@ function updateFleetView() {
 		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>")
 				
 		var member_table_body = $('#members');
+		console.log(member_table_body);
 		member_table_body.empty();
 		$.each(data["members"], function (index, value) {
 			var row = $('<tr>');
@@ -36,6 +37,7 @@ function updateFleetView() {
 			row.append($('<td>').text(value["solar_system_name"]));
 			member_table_body.append(row);
 		});
+		console.log(member_table_body);
 		
 		var fleetcomp_table = $('<table>').attr('class','table');
 		var fleetcomp_table_body = $('<tbody>');
