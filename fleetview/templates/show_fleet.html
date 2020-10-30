@@ -43,7 +43,34 @@
 		<div id="loading_indicator" class="container"><progress class="progress is-large is-info" max="100">60%</progress></div>
 		<div id="last_refresh_time" class="container"></div>
 		<div class="columns">
-			<div id="members" class="column"></div>		
+			<div class="column">
+				<table class="table" onload="tablesort()">
+					<thead>
+						<tr>
+							<th>
+								Ship
+								<span class="icon">
+									<i class='fas fa-sort'>
+								</span>
+							</th>
+							<th>
+								Type
+								<span class="icon">
+									<i class='fas fa-sort'>
+								</span>
+							</th>
+							<th>
+								Location
+								<span class="icon">
+									<i class='fas fa-sort'>
+								</span>
+							</th>
+						</tr>
+					</thead>
+				</table>
+				<tbody id="members">
+				</tbody>
+			</div>		
 			<div id="fleetcomp" class="column"></div>	
 			<div id="ships" class="column"></div>
 		</div>

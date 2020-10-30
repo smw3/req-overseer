@@ -25,25 +25,8 @@ function updateFleetView() {
 		
 		var time = data["last_refresh"];
 		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>")
-		
-		var member_table = $('<table>').attr('class','table');
-		member_table.append(
-			$('<thead>').append(
-				$('<tr>').append(
-					$('<th>').text('Pilot').append(
-						$('<span>').attr("class","icon").append(
-							$('<i>').attr('class','fas fa-sort'))),
-					$('<th>').text('Ship').append(
-						$('<span>').attr("class","icon").append(
-							$('<i>').attr('class','fas fa-sort'))),
-					$('<th>').text('Type').append(
-						$('<span>').attr("class","icon").append(
-							$('<i>').attr('class','fas fa-sort'))),
-					$('<th>').text('Location').append(
-						$('<span>').attr("class","icon").append(
-							$('<i>').attr('class','fas fa-sort'))))));
-							
-		var member_table_body = $('<tbody>');
+				
+		var member_table_body = $('#members');
 		$.each(data["members"], function (index, value) {
 			var row = $('<tr>');
 			row.append($('<td>').text(value["name"]));
@@ -52,8 +35,6 @@ function updateFleetView() {
 			row.append($('<td>').text(value["solar_system_name"]));
 			member_table_body.append(row);
 		});
-		member_table.append(member_table_body);
-		member_table.tablesort();
 		
 		var fleetcomp_table = $('<table>').attr('class','table');
 		var fleetcomp_table_body = $('<tbody>');
