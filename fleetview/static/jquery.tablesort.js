@@ -16,15 +16,16 @@
 		});
 		this.index = null;
 		this.$th = null;
-		this.direction = null;
 	};
 
 	$.tablesort.prototype = {
 
-		sort: function(th, direction) {
+		sort: function(th) {
 			var start = new Date(),
 				self = this,
 				table = this.$table,
+				thead = this.$table.find('thead'),
+				sortCells = this.$thead.length > 0 ? this.$thead.find('th:not(.no-sort)') : this.$table.find('th:not(.no-sort)'),
 				rowsContainer = table.find('tbody').length > 0 ? table.find('tbody') : table,
 				rows = rowsContainer.find('tr').has('td, th'),
 				cells = rows.find(':nth-child(' + (th.index() + 1) + ')').filter('td, th'),
@@ -38,17 +39,28 @@
 			});
 			if (unsortedValues.length === 0) return;
 
-			//click on a different column
-			if (this.index !== th.index()) {
-				this.direction = 'asc';
-				this.index = th.index();
+			var direction = 'asc';
+			if (th.hasClass("sort-asc")) {
+				th.removeClass("sort-asc").addClass("sort-desc").removeClass("sort-none");
+				direction = 'desc';
+				$.each(sortCells, function( index, value ) {
+					value.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
+					value.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
+				});
+				th.find( "i" ).removeClass("fa-sort-up").addClass("fa-sort-down").removeClass("fa-sort");
+			} else if (th.hasClass("sort-desc")) {
+				th.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
+				th.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
+				return;
+			} else {
+				th.addClass("sort-asc").removeClass("sort-desc").removeClass("sort-none");
+				direction = 'asc';
+				$.each(sortCells, function( index, value ) {
+					value.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
+					value.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
+				});
+				th.find( "i" ).addClass("fa-sort-up").removeClass("fa-sort-down").removeClass("fa-sort");
 			}
-			else if (direction !== 'asc' && direction !== 'desc')
-				this.direction = this.direction === 'asc' ? 'desc' : 'asc';
-			else
-				this.direction = direction;
-
-			direction = this.direction == 'asc' ? 1 : -1;
 
 			self.$table.trigger('tablesort:start', [self]);
 			self.log("Sorting by " + this.index + ' ' + this.direction);
