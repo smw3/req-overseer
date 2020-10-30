@@ -43,6 +43,7 @@
 			if (th.hasClass("sort-asc")) {
 				th.removeClass("sort-asc").addClass("sort-desc").removeClass("sort-none");
 				direction = 'desc';
+				console.log(sortCells);
 				$.each(sortCells, function( index, value ) {
 					value.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
 					value.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
@@ -55,6 +56,7 @@
 			} else {
 				th.addClass("sort-asc").removeClass("sort-desc").removeClass("sort-none");
 				direction = 'asc';
+				console.log(sortCells);
 				$.each(sortCells, function( index, value ) {
 					value.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
 					value.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
