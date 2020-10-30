@@ -45,6 +45,7 @@
 				direction = 'desc';
 				console.log(sortCells);
 				$.each(sortCells, function( index, value ) {
+					console.log(value);
 					value.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
 					value.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
 				});
@@ -58,6 +59,7 @@
 				direction = 'asc';
 				console.log(sortCells);
 				$.each(sortCells, function( index, value ) {
+					console.log(value);
 					value.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
 					value.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
 				});
