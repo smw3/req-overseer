@@ -44,11 +44,8 @@
 				th.removeClass("sort-asc").addClass("sort-desc").removeClass("sort-none");
 				direction = 'desc';
 				console.log(sortCells);
-				$.each(sortCells, function( index, value ) {
-					console.log(value);
-					value.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
-					value.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
-				});
+				table.find("th").removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
+				table.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
 				th.find( "i" ).removeClass("fa-sort-up").addClass("fa-sort-down").removeClass("fa-sort");
 			} else if (th.hasClass("sort-desc")) {
 				th.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
@@ -58,11 +55,8 @@
 				th.addClass("sort-asc").removeClass("sort-desc").removeClass("sort-none");
 				direction = 'asc';
 				console.log(sortCells);
-				$.each(sortCells, function( index, value ) {
-					console.log(value);
-					value.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
-					value.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
-				});
+				table.find("th").removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
+				table.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
 				th.find( "i" ).addClass("fa-sort-up").removeClass("fa-sort-down").removeClass("fa-sort");
 			}
 
