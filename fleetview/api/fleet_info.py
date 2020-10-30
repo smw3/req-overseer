@@ -64,7 +64,9 @@ def mass_resolve_fleet_members(fleet_info):
     resolved_members = mass_esi_request("characters/{par}/", [character_id for character_id in member_ids], public = True)
     
     # do not parallelize lookups of common things, prefer using main-thread caches
-    for member_dict in resolved_members:
+    for character_id in resolved_members:
+        member_dict = resolved_members[character_id]
+        app.logger.info(member_dict)
         member_dict["solar_system_name"] = resolve_solar_system_id_to_name(member_dict["solar_system_id"])
         ship_info = resolve_ship_simple(member_dict["ship_type_id"])
         member_dict["ship_info"] = ship_info
