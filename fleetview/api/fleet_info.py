@@ -58,6 +58,8 @@ def current_fleet():
         return '{"error": "You need to authenticate first!" }'
     except ESIError:
         return '{"error": "Unknown ESI issue occured, please try again later." }'
+    except Exception as inst:
+        return f'{"error": "An unknown error occured: {inst}" }'
 
 def mass_resolve_fleet_members(fleet_info):
     member_ids = [member["character_id"] for member in fleet_info]
