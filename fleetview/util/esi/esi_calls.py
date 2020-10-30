@@ -38,7 +38,7 @@ def esi_request(endpoint, public = False):
         check_response(req) 
                 
 def mass_esi_request(endpoint, parameter_list, public = False):
-    pool_count = 30
+    pool_count = 5
     
     app.logger.info(f"Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}")
     start = time.time()
