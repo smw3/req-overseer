@@ -27,6 +27,7 @@ function updateFleetView() {
 		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>")
 				
 		var member_table_body = $('#members');
+		member_table_body.empty();
 		$.each(data["members"], function (index, value) {
 			var row = $('<tr>');
 			row.append($('<td>').text(value["name"]));
@@ -81,8 +82,6 @@ function updateFleetView() {
 		
 		$("#loading_indicator").remove();
 		
-		$("#members").empty();
-		$("#members").append(member_table);
 		$("#fleetcomp").empty();
 		$("#fleetcomp").append(fleetcomp_table);
 		$("#ships").empty();
