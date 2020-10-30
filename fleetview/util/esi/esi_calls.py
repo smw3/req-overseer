@@ -45,7 +45,7 @@ def mass_esi_request(endpoint, parameter_list, public = False):
     pool_count = 30
     
     pool = mp.Pool(pool_count)
-    results = pool.map(esi_request, [endpoint.format(par=a) for a in parameter_list], [a for a in parameter_list], [public for a in parameter_list])
+    results = pool.starmap(single_mass_request, [(endpoint.format(par=a), a) for a in parameter_list])
     pool.close()
     
     resultDict = {}
