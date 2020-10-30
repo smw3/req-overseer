@@ -45,7 +45,7 @@ def single_mass_request(endpoint, parameter, public = False):
 def mass_esi_request(endpoint, parameter_list, public = False):
     pool_count = 30
     
-    app.logger.info("Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}")
+    app.logger.info(f"Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}")
     start = time.time()
     
     pool = mp.Pool(pool_count)
@@ -58,7 +58,7 @@ def mass_esi_request(endpoint, parameter_list, public = False):
         del result["esi_request_var"]
         
     end_time = start = time.time()
-    app.logger.info("Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}. Time taken: {end_time-start}")
+    app.logger.info(f"Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}. Time taken: {end_time-start}")
     app.logger.info(resultDict)
     
     return resultDict
