@@ -23,13 +23,13 @@ def current_fleet():
         out = { "members" : [], "fleet_comp": {}, "ships": {} }
         app.logger.info("Query fleet under " + str(get_char_info()))
         
-        fleet_info = get_fleet_members()  
-        
+        fleet_info = get_fleet_members() 
         resolved_members = mass_resolve_fleet_members(fleet_info)
         
         for member in fleet_info:
             member_dict = resolve_character_id(member["character_id"], resolved_members[member["character_id"]])
             member_dict = { **member, **member_dict }
+            logger.app.info(f"Member dict: {member_dict}")
             
             member_dict["solar_system_name"] = resolve_solar_system_id_to_name(member_dict["solar_system_id"])
             
