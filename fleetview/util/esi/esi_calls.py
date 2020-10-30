@@ -107,7 +107,6 @@ def resolve_corporation_id_to_name(corporation_id):
 def resolve_alliance_id_to_name(alliance_id):
     return esi_request(f"alliances/{alliance_id}/", public = True)["name"]
 
-@cachetools.func.ttl_cache(maxsize=128, ttl=48 * 60 * 60)
 def resolve_character_id(character_id, resolved_char_dict = None):
     out_dict = {}
     if resolved_char_dict is None:
