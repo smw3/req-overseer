@@ -49,7 +49,7 @@ def mass_esi_request(endpoint, parameter_list, public = False):
     app.logger.info(f"Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}")
     start = time.time()
     
-    with with mp.get_context("spawn").Pool(pool_count) as p:
+    with mp.get_context("spawn").Pool(pool_count) as p:
         results = p.starmap(single_mass_request, [(endpoint.format(par=a), a) for a in parameter_list])
     
     resultDict = {}
