@@ -5,6 +5,7 @@ from .esi_error import check_response
 from .esi_manager import get_access_token, get_character_id
 from .esi_error import ESIError
 
+import time
 import multiprocessing as mp
 import cachetools.func
 
@@ -44,6 +45,9 @@ def single_mass_request(endpoint, parameter, public = False):
 def mass_esi_request(endpoint, parameter_list, public = False):
     pool_count = 30
     
+    app.logger.info("Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}")
+    start = time.time()
+    
     pool = mp.Pool(pool_count)
     results = pool.starmap(single_mass_request, [(endpoint.format(par=a), a) for a in parameter_list])
     pool.close()
@@ -52,6 +56,10 @@ def mass_esi_request(endpoint, parameter_list, public = False):
     for result in results:
         resultDict[result["esi_request_var"]] = result
         del result["esi_request_var"]
+        
+    end_time = start = time.time()
+    app.logger.info("Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}. Time taken: {end_time-start}")
+    app.logger.info(resultDict)
     
     return resultDict
 
