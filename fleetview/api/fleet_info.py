@@ -29,7 +29,7 @@ def current_fleet():
         for member in fleet_info:
             member_dict = resolve_character_id(member["character_id"], resolved_members[member["character_id"]])
             member_dict = { **member, **member_dict }
-            logger.app.info(f"Member dict: {member_dict}")
+            app.logger.info(f"Member dict: {member_dict}")
             
             member_dict["solar_system_name"] = resolve_solar_system_id_to_name(member_dict["solar_system_id"])
             
@@ -63,13 +63,7 @@ def mass_resolve_fleet_members(fleet_info):
     
     resolved_members = mass_esi_request("characters/{par}/", [character_id for character_id in member_ids], public = True)
     
-    # do not parallelize lookups of common things, prefer using main-thread caches
-    for character_id in resolved_members:
-        member_dict = resolved_members[character_id]
-        app.logger.info(member_dict)
-        member_dict["solar_system_name"] = resolve_solar_system_id_to_name(member_dict["solar_system_id"])
-        ship_info = resolve_ship_simple(member_dict["ship_type_id"])
-        member_dict["ship_info"] = ship_info
+    return resolved_members
     
 def save_fleet_scan(fleet_scan, char_id):
     base_path = config["DEFAULT"]["LIVE_SHARE"]
