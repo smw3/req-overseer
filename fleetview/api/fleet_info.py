@@ -62,9 +62,6 @@ def current_fleet():
 def mass_resolve_fleet_members(fleet_info):
     member_ids = [member["character_id"] for member in fleet_info]
     
-    for i in range(7):
-        member_ids = member_ids + member_ids
-    
     resolved_members = mass_esi_request("characters/{par}/", [character_id for character_id in member_ids], public = True)
     
     return resolved_members
