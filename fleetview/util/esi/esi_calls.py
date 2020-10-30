@@ -3,7 +3,7 @@ from ...fleetview import app
 import requests
 from .esi_error import check_response
 from .esi_manager import get_access_token, get_character_id
-from .esi_error import ESIError
+from .parallel_esi import single_mass_request
 
 import time
 import multiprocessing as mp
@@ -36,24 +36,23 @@ def esi_request(endpoint, public = False):
         app.logger.error(req.status_code)
         app.logger.error(req.text)
         check_response(req) 
-        
-def single_mass_request(endpoint, parameter, public = False):
-    out = esi_request(endpoint, public)
-    out["esi_request_var"] = parameter
-    
-    return out
-        
+                
 def mass_esi_request(endpoint, parameter_list, public = False):
     pool_count = 30
     
     app.logger.info(f"Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}")
     start = time.time()
     
+    access_token = get_access_token()['access_token'] if public else None
+    
     with mp.get_context("spawn").Pool(pool_count) as p:
-        results = p.starmap(single_mass_request, [(endpoint.format(par=a), a) for a in parameter_list])
+        results = p.starmap(single_mass_request, [(endpoint.format(par=a), a, access_token) for a in parameter_list])
     
     resultDict = {}
     for result in results:
+        if result is None:
+            continue
+        
         resultDict[result["esi_request_var"]] = result
         del result["esi_request_var"]
         
