@@ -8,7 +8,7 @@ from datetime import datetime
 
 from ..fleetview import app, config
 from ..util.esi.esi_manager import get_char_info, get_character_id
-from ..util.esi.esi_calls import get_fleet_members, resolve_character_id, resolve_solar_system_id_to_name, resolve_ship_simple
+from ..util.esi.esi_calls import get_fleet_members, resolve_character_id, resolve_solar_system_id_to_name, mass_esi_request, resolve_ship_simple
 from ..util.esi.esi_error import CharacterNotInFleetError, CharacterNotFCError, NotAuthedError, ESIError
 
 @app.route('/api/fleet')
@@ -22,8 +22,13 @@ def current_fleet():
     try:
         out = { "members" : [], "fleet_comp": {}, "ships": {} }
         app.logger.info("Query fleet under " + str(get_char_info()))
-        for member in get_fleet_members():
-            member_dict = resolve_character_id(member["character_id"])
+        
+        fleet_info = get_fleet_members()  
+        
+        resolved_members = mass_resolve_fleet_members(fleet_info)
+        
+        for member in fleet_info:
+            member_dict = resolve_character_id(member["character_id"], resolved_members[member["character_id"]])
             member_dict = { **member, **member_dict }
             
             member_dict["solar_system_name"] = resolve_solar_system_id_to_name(member_dict["solar_system_id"])
@@ -52,6 +57,17 @@ def current_fleet():
         return '{"error": "You need to authenticate first!" }'
     except ESIError:
         return '{"error": "Unknown ESI issue occured, please try again later." }'
+
+def mass_resolve_fleet_members(fleet_info):
+    member_ids = [member["character_id"] for member in fleet_info]
+    
+    resolved_members = mass_esi_request("characters/{par}/", [character_id for character_id in member_ids], public = True)
+    
+    # do not parallelize lookups of common things, prefer using main-thread caches
+    for member_dict in resolved_members:
+        member_dict["solar_system_name"] = resolve_solar_system_id_to_name(member_dict["solar_system_id"])
+        ship_info = resolve_ship_simple(member_dict["ship_type_id"])
+        member_dict["ship_info"] = ship_info
     
 def save_fleet_scan(fleet_scan, char_id):
     base_path = config["DEFAULT"]["LIVE_SHARE"]

@@ -23,8 +23,7 @@ function updateFleetView() {
 			return;
 		}
 		
-		var today = new Date();
-		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		var time = data["last_refresh"];
 		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>")
 		
 		var member_table = $('<table>').attr('class','table');

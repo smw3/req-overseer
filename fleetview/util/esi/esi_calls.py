@@ -5,6 +5,7 @@ from .esi_error import check_response
 from .esi_manager import get_access_token, get_character_id
 from .esi_error import ESIError
 
+import multiprocessing as mp
 import cachetools.func
 
 def esi_request(endpoint, public = False):    
@@ -33,6 +34,26 @@ def esi_request(endpoint, public = False):
         app.logger.error(req.status_code)
         app.logger.error(req.text)
         check_response(req) 
+        
+def single_mass_request(endpoint, parameter, public = False):
+    out = esi_request(endpoint, public)
+    out["esi_request_var"] = parameter
+    
+    return out
+        
+def mass_esi_request(endpoint, parameter_list, public = False):
+    pool_count = 30
+    
+    pool = mp.Pool(pool_count)
+    results = pool.map(esi_request, [endpoint.format(par=a) for a in parameter_list], [a for a in parameter_list], [public for a in parameter_list])
+    pool.close()
+    
+    resultDict = {}
+    for result in results:
+        resultDict[result["esi_request_var"]] = result
+        del result["esi_request_var"]
+    
+    return resultDict
 
 def get_character_fleet():
     character_id = get_character_id()
@@ -79,9 +100,12 @@ def resolve_alliance_id_to_name(alliance_id):
     return esi_request(f"alliances/{alliance_id}/", public = True)["name"]
 
 @cachetools.func.ttl_cache(maxsize=128, ttl=48 * 60 * 60)
-def resolve_character_id(character_id):
+def resolve_character_id(character_id, resolved_char_dict = None):
     out_dict = {}
-    esi_dict = esi_request(f"characters/{character_id}/", public = True)
+    if resolved_char_dict is None:
+        esi_dict = esi_request(f"characters/{character_id}/", public = True)
+    else:
+        esi_dict = resolved_char_dict
     out_dict["name"] = esi_dict["name"]
     out_dict["corp"] = resolve_corporation_id_to_name(esi_dict["corporation_id"])
     out_dict["alliance"] = resolve_alliance_id_to_name(esi_dict["alliance_id"])
