@@ -7,6 +7,7 @@ from .esi_error import ESIError
 
 import time
 import multiprocessing as mp
+
 import cachetools.func
 
 def esi_request(endpoint, public = False):    
@@ -48,7 +49,7 @@ def mass_esi_request(endpoint, parameter_list, public = False):
     app.logger.info(f"Mass esi request: endpoint \"{endpoint}\", calls: {len(parameter_list)}")
     start = time.time()
     
-    with mp.Pool(pool_count) as p:
+    with with mp.get_context("spawn").Pool(pool_count) as p:
         results = p.starmap(single_mass_request, [(endpoint.format(par=a), a) for a in parameter_list])
     
     resultDict = {}
