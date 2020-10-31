@@ -62,7 +62,7 @@ function updateFleetView() {
 			var row = $('<tr>');
 			row.append($('<td>').text(index));
 			row.append($('<td>').text(value));
-			ships_table_body.append(row);
+			alliance_table_body.append(row);
 		});
 		$('#alliance_table').tablesort();
 		
@@ -72,7 +72,7 @@ function updateFleetView() {
 			var row = $('<tr>');
 			row.append($('<td>').text(index));
 			row.append($('<td>').text(value));
-			ships_table_body.append(row);
+			corporation_table_body.append(row);
 		});
 		$('#corporation_table').tablesort();
 		
