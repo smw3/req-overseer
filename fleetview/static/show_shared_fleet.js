@@ -37,6 +37,7 @@ function updateFleetView() {
 			member_table_body.append(row);
 		});
 		$('#members_table').tablesort();
+		console.log("members_table!");	
 		
 		var fleetcomp_table_body = $('#fleetcomp_body');
 		fleetcomp_table_body.empty();					
@@ -46,7 +47,8 @@ function updateFleetView() {
 			row.append($('<td>').text(value));
 			fleetcomp_table_body.append(row);
 		});
-		$('#fleetcomp_table').tablesort();		
+		$('#fleetcomp_table').tablesort();	
+		console.log("fleetcomp_table!");		
 				
 		var ships_table_body = $('#ships_body');	
 		ships_table_body.empty();		
@@ -57,9 +59,11 @@ function updateFleetView() {
 			ships_table_body.append(row);
 		});
 		$('#ships_table').tablesort();
+		console.log("ships_table!");
 		
 		$("#errors").empty();
 		$("#loading_indicator").remove();
+		console.log("Done!");
 	}).fail(function(jqXHR, textStatus, errorThrown) { 
 		$("#loading_indicator").show();
 		
