@@ -1,18 +1,5 @@
 var sharing = false;
 
-function handleError(data) {
-	$("#errors").empty();
-	if (data.hasOwnProperty("error")) {
-		$("#errors").append(
-			$("<div>").attr("class", "container").append(
-				$("<div>").attr("class", "notification is-primary").text(data["error"])
-			)
-		);
-		return true;
-	}
-	return false;
-}
-
 function updateFleetView() {
 	$.getJSON('/api/shared_fleet/' + share_id, function (data) {
 		if (handleError(data)) {
@@ -24,7 +11,8 @@ function updateFleetView() {
 		}
 		
 		var time = data["last_refresh"];
-		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>");
+		timeSinceLastUpdate = new Date(time).getTime();
+		updateTimeSinceUpdate();
 		
 		var member_table_body = $('#members_body');
 		member_table_body.empty();
@@ -104,5 +92,6 @@ function updateFleetView() {
 
 $(document).ready(function(){
 	updateFleetView();
-	var myVar = setInterval(updateFleetView, 1000 * 60);
+	setInterval(updateFleetView, 1000 * 60);
+	setInterval(updateTimeSinceUpdate, 1000);
 });
