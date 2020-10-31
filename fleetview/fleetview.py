@@ -16,7 +16,7 @@ app.logger.handlers = gunicorn_logger.handlers
 app.logger.setLevel(gunicorn_logger.level)
 
 from .util.esi.esi_manager import requires_auth, get_auth_url, fetch_access_token, is_authenticated, get_authed_info
-from .api.fleet_info import current_fleet, current_fleet_mock
+from .api.fleet_info import current_fleet
 
 def is_beta():
     return app.config['BETA']
