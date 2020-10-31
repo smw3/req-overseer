@@ -8,12 +8,93 @@
   </head>
   <body class="has-navbar-fixed-top" style="padding-top: 5.5rem;">
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="{{ url_for('static', filename='show_fleet.js') }}"></script>
+	<script src="{{ url_for('static', filename='jquery.tablesort.js') }}"></script>
+	<script>
+		var char_id = {{ char_id }};
+		var snapshot_id = {{ snapshot_id }};
+	</script>
+	<script src="{{ url_for('static', filename='show_snapshot.js') }}"></script>
+	<script src="https://kit.fontawesome.com/4ac5bc0e9c.js" crossorigin="anonymous"></script>	
 	
 	{% include 'navbar.html' %}
 	
 	<section class="section">	
-		<strong>Not yet implemented</strong>
+		<div id="loading_indicator" class="container"><progress class="progress is-large is-info" max="100">60%</progress></div>
+		<div id="last_refresh_time" class="container"></div>
+		<div class="container"></div>
+			<div class="columns">
+				<div class="column">
+					<table class="table" onload="tablesort()" id="members_table">
+						<thead>
+							<tr>
+								<th style="white-space: nowrap">Name
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+								<th style="white-space: nowrap">Ship
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+								<th style="white-space: nowrap">Type
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+								<th style="white-space: nowrap">Location
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody id="members_body">
+						</tbody>
+					</table>
+				</div>
+				<div class="column">
+					<table class="table" onload="tablesort()" id="fleetcomp_table">
+						<thead>
+							<tr>
+								<th style="white-space: nowrap">Type
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+								<th style="white-space: nowrap">Number
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody id="fleetcomp_body">
+						</tbody>
+					</table>
+				</div>					
+				<div class="column">
+					<table class="table" onload="tablesort()" id="ships_table">
+						<thead>
+							<tr>
+								<th style="white-space: nowrap">Name
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+								<th style="white-space: nowrap">Number
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody id="ships_body">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</section>
 	
 	{% include 'footer.html' %}

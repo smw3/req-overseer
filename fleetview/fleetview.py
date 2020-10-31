@@ -34,12 +34,14 @@ def show_fleet():
                            authed = is_authenticated(),
                            authed_info = get_authed_info())
 
-@app.route('/show_snapshots')
-def show_snapshots():    
-    return render_template('show_snapshots.html', 
-                           auth_url = url_for('auth', next=url_for('show_snapshots')),
+@app.route('/show_snapshot/<char_id>/<snapshot_id>')
+def show_snapshots(char_id, snapshot_id):    
+    return render_template('show_snapshot.html', 
+                           auth_url = url_for('auth', next=url_for('show_snapshot')),
                            authed = is_authenticated(),
-                           authed_info = get_authed_info())
+                           authed_info = get_authed_info(),
+                           char_id = char_id,
+                           snapshot_id = snapshot_id)
 
 @app.route('/show_shared/<share_id>')
 def show_shared(share_id):    

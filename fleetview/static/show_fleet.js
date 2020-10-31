@@ -88,7 +88,7 @@ function createSnapshot() {
 			return;
 		}
 		$( "#snapshot_link" ).append(
-			$("<a>").attr("href", "/api/fleet/snapshot/" + data["char_id"] + "/" + data["snapshot_id"]).text("LINK")
+			$("<a>").attr("href", "/fleet/snapshot/" + data["char_id"] + "/" + data["snapshot_id"]).text("LINK")
 		);
 		$( "#snapshot_button" ).remove();		
 	}).fail(function() { 
