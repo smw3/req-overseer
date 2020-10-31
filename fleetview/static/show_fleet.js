@@ -88,7 +88,7 @@ function createSnapshot() {
 			return;
 		}
 		$( "#snapshot_link" ).append(
-			$("<a>").attr("href", "/snapshot/" + data["char_id"] + "/" + data["snapshot_id"]).text("LINK");
+			$("<a>").attr("href", "/snapshot/" + data["char_id"] + "/" + data["snapshot_id"]).text("LINK")
 		);
 		$( "#share_button" ).remove();		
 	}).fail(function() { 
