@@ -73,7 +73,7 @@ function updateTimeSinceUpdate() {
 		timeSinceText = timeSinceText + days + " minutes";
 	
 	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-	timeSinceText = timeSinceText + days + " seconds";
+	timeSinceText = timeSinceText + seconds + " seconds";
 	
 	timeSinceText = timeSinceText + " ago";
 	
