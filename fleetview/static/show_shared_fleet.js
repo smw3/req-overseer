@@ -92,6 +92,7 @@ function updateFleetView() {
 		$("#loading_indicator").hide();
 	}).fail(function(jqXHR, textStatus, errorThrown) { 
 		$("#loading_indicator").show();
+		$("#errors").empty();
 		
 		$("#errors").append(
 			$("<div>").attr("class", "container").append(
