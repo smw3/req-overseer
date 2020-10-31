@@ -13,6 +13,13 @@ function handleError(data) {
 	return false;
 }
 
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
 function formatDate(d) {
 	const year = d.getFullYear() // 2019
 	const date = d.getDate() // 23
@@ -46,7 +53,7 @@ function formatDate(d) {
 	
 	const dayName = days[d.getDay()] // Thu
 	
-	const formatted = `${dayName}, ${date} ${monthName} ${year} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+	const formatted = `${dayName}, ${date} ${monthName} ${year} ${addZero(d.getHours())}:${addZero(d.getMinutes())}:${addZero(d.getSeconds())}`
 	
 	return formatted
 }	
@@ -65,11 +72,11 @@ function updateTimeSinceUpdate() {
 	
 	var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	if (hours > 0)
-		timeSinceText = timeSinceText + days + " hours ";
+		timeSinceText = timeSinceText + hours + " hours ";
 	
 	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 	if (minutes > 0)
-		timeSinceText = timeSinceText + days + " minutes ";
+		timeSinceText = timeSinceText + minutes + " minutes ";
 	
 	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 	if (distance < 1000*60*10) 
