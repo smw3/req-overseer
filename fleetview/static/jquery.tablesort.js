@@ -64,6 +64,8 @@
 			} else {
 				return;
 			}
+			
+			direction = direction == 'asc' ? 1 : -1;
 
 			self.$table.trigger('tablesort:start', [self]);
 			self.log("Sorting by " + this.index + ' ' + this.direction);
