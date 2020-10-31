@@ -4,6 +4,7 @@ import configparser
 import urllib.parse
 import os
 import time
+import pytz
 
 from pathlib import Path
 from datetime import datetime
@@ -49,7 +50,7 @@ def current_fleet():
 
             out["members"].append(member_dict)
             
-            out["last_refresh"] = datetime.now().strftime("%H:%M:%S")
+            out["last_refresh"] = datetime.now(pytz.utc).strftime("%d %B %Y %H:%M:%S UTC")
             out["shared_to"] = allowed_participants
             
             if share:

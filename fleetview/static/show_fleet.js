@@ -1,4 +1,5 @@
 var sharing = false;
+var timeSinceLastUpdate = new Date("Jan 1, 2020 12:00:00").getTime();
 
 function handleError(data) {
 	$("#errors").empty();
@@ -13,6 +14,31 @@ function handleError(data) {
 	return false;
 }
 
+function updateTimeSinceUpdate() {
+	var now = new Date().getTime();
+	var distance = timeSinceLastUpdate - now;
+	
+	var timeSinceText = "";
+	var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+	if (days > 0)
+		timeSinceText = timeSinceText + days + " days";
+	
+	var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	if (hours > 0)
+		timeSinceText = timeSinceText + days + " hours";
+	
+	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	if (minutes > 0)
+		timeSinceText = timeSinceText + days + " minutes";
+	
+	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	timeSinceText = timeSinceText + days + " seconds";
+	
+	timeSinceText = timeSinceText + " ago";
+	
+	$("#last_refresh_time").html("<strong>Last updated: " + timeSinceLastUpdate + " (" + timeSinceText + ")</strong>")
+}
+
 function updateFleetView() {
 	$.getJSON('/api/fleet?sharing=' + sharing + '&participants=' + encodeURIComponent($( "#share_participants" ).val()), function (data) {
 		if (handleError(data)) {
@@ -24,7 +50,8 @@ function updateFleetView() {
 		}
 		
 		var time = data["last_refresh"];
-		$("#last_refresh_time").html("<strong>Last updated: " + time + "</strong>")
+		timeSinceLastUpdate = new Date(time).getTime();
+		updateTimeSinceUpdate();
 				
 		var member_table_body = $('#members_body');
 		member_table_body.empty();
@@ -143,7 +170,7 @@ $(document).ready(function(){
 	});
 	
 	updateFleetView();
-	var myVar = setInterval(updateFleetView, 1000 * 60);
-	
+	setInterval(updateFleetView, 1000 * 60);
+	setInterval(updateTimeSinceUpdate(), 1000);
 	
 });
