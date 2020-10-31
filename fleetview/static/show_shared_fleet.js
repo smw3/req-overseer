@@ -58,9 +58,16 @@ function updateFleetView() {
 		});
 		$('#ships_table').tablesort();
 		
+		$("#errors").empty();
 		$("#loading_indicator").remove();
-	}).fail(function() { 
+	}).fail(function(jqXHR, textStatus, errorThrown) { 
 		$("#loading_indicator").show();
+		
+		$("#errors").append(
+			$("<div>").attr("class", "container").append(
+				$("<div>").attr("class", "notification is-primary").text(textStatus)
+			)
+		);
 	});
 }
 
