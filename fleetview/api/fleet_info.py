@@ -22,7 +22,7 @@ def current_fleet():
         allowed_participants = []
     
     try:
-        out = { "members" : [], "fleet_comp": {}, "ships": {} }
+        out = { "members" : [], "fleet_comp": {}, "ships": {}, "alliances": {}, "coporations": {} }
         app.logger.info("Query fleet under " + str(get_char_info()))
         
         fleet_info = get_fleet_members() 
@@ -42,6 +42,10 @@ def current_fleet():
             # add ship type to fleet comp
             out["fleet_comp"][ship_info["type"]] = out["fleet_comp"].get(ship_info["type"],0) + 1
             out["ships"][ship_info["name"]] = out["ships"].get(ship_info["name"],0) + 1    
+            
+            # alliance/corp numbers
+            out["alliances"][member_dict["alliance"]] = out["alliances"].get(member_dict["alliance"],0) + 1
+            out["corporations"][member_dict["corp"]] = out["corporations"].get(member_dict["corp"],0) + 1   
 
             out["members"].append(member_dict)
             

@@ -32,12 +32,12 @@ function updateFleetView() {
 			var row = $('<tr>');
 			row.append($('<td>').attr("data-sort-value", value["alliance"]).append(
 				$('<figure>').addClass("image").addClass("is-32x32").append(
-					$('<img>').attr('src','https://images.evetech.net/alliances/' + value["alliance_id"] + '/logo?size=32')
+					$('<img>').attr('src','https://images.evetech.net/alliances/' + value["alliance_id"] + '/logo?size=32').attr("title", value["alliance"])
 				)
 			));
 			row.append($('<td>').attr("data-sort-value", value["corp"]).append(
 				$('<figure>').addClass("image").addClass("is-32x32").append(
-					$('<img>').attr('src','https://images.evetech.net/alliances/' + value["corp_id"] + '/logo?size=32')
+					$('<img>').attr('src','https://images.evetech.net/corporations/' + value["corp_id"] + '/logo?size=32').attr("title", value["corp"])
 				)
 			));
 			row.append($('<td>').text(value["name"]));
@@ -67,6 +67,26 @@ function updateFleetView() {
 			ships_table_body.append(row);
 		});
 		$('#ships_table').tablesort();
+				
+		var alliance_table_body = $('#alliance_body');	
+		alliance_table_body.empty();		
+		$.each(data["alliances"], function (index, value) {
+			var row = $('<tr>');
+			row.append($('<td>').text(index));
+			row.append($('<td>').text(value));
+			ships_table_body.append(row);
+		});
+		$('#alliance_table').tablesort();
+		
+		var corporation_table_body = $('#corporation_body');	
+		corporation_table_body.empty();		
+		$.each(data["corporations"], function (index, value) {
+			var row = $('<tr>');
+			row.append($('<td>').text(index));
+			row.append($('<td>').text(value));
+			ships_table_body.append(row);
+		});
+		$('#corporation_table').tablesort();
 		
 		$("#errors").empty();
 		$("#loading_indicator").hide();
