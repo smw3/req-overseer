@@ -14,7 +14,7 @@ function handleError(data) {
 }
 
 function updateFleetView() {	
-	$.getJSON('/api/fleet/snapshot/' + char_id + '/' + snapshot_id), function (data) {
+	$.getJSON('/api/fleet/snapshot/' + char_id + '/' + snapshot_id, function (data) {
 		if (handleError(data)) {
 			$("#loading_indicator").hide();
 			$("#members_body").empty();
