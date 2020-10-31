@@ -37,7 +37,7 @@ def show_fleet():
 @app.route('/show_snapshot/<char_id>/<snapshot_id>')
 def show_snapshot(char_id, snapshot_id):    
     return render_template('show_snapshot.html', 
-                           auth_url = url_for('auth', next=url_for('show_snapshot')),
+                           auth_url = url_for('auth', next=url_for('show_snapshot', char_id=char_id, snapshot_id=snapshot_id)),
                            authed = is_authenticated(),
                            authed_info = get_authed_info(),
                            char_id = char_id,
