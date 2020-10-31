@@ -60,7 +60,29 @@ def current_fleet():
         return '{"error": "Unknown ESI issue occured, please try again later." }'
     except Exception as inst:
         return f'{"error": "An unknown error occured: {inst}" }'
-
+    
+@app.route('/api/fleet/snapshot')
+def take_fleet_snapshot(): 
+    try:
+        out_dict = {}
+        out_dict["char_id"] = 23145352
+        out_dict["snapshot_id"] = 2132
+        
+        return json.dumps(out_dict)  
+    except CharacterNotInFleetError:
+        return '{"error": "You are not in a fleet!"}'
+    except CharacterNotFCError:
+        return '{"error": "The fleet does not exist or you don\'t have access to it! Are you the FC?"}'
+    except NotAuthedError:
+        return '{"error": "You need to authenticate first!" }'
+    except ESIError:
+        return '{"error": "Unknown ESI issue occured, please try again later." }'
+    except Exception as inst:
+        return f'{"error": "An unknown error occured: {inst}" }'
+    
+    
+    
+    
 def mass_resolve_fleet_members(fleet_info):
     member_ids = [member["character_id"] for member in fleet_info]
     

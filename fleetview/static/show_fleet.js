@@ -16,7 +16,7 @@ function handleError(data) {
 function updateFleetView() {
 	$.getJSON('/api/fleet?sharing=' + sharing + '&participants=' + encodeURIComponent($( "#share_participants" ).val()), function (data) {
 		if (handleError(data)) {
-			$("#loading_indicator").remove();
+			$("#loading_indicator").hide();
 			$("#members_body").empty();
 			$("#fleetcomp_body").empty();
 			$("#ships_body").empty();
@@ -59,6 +59,8 @@ function updateFleetView() {
 		$('#ships_table').tablesort();
 		
 		$("#loading_indicator").remove();
+	}).fail(function() { 
+		$("#loading_indicator").show();
 	});
 }
 
@@ -72,14 +74,34 @@ function toggleSharing() {
 		sharing = true;
 		$( "#share_button" ).text(" Stop Sharing").addClass("is-danger");
 		$( "#share_participants" ).prop( "disabled", true );
-		$( "#share_link" ).html("Sharing at <a href=\"/show_shared/" + authedCharId + "\">LINK</a>");
+		$( "#share_link" ).html(" Sharing at <a href=\"/show_shared/" + authedCharId + "\">LINK</a>");
 		updateFleetView();
 	}
+}
+
+function createSnapshot() {
+	$( "#share_button" ).addClass("is-loading");
+	
+	$.getJSON('/api/fleet/snapshot'), function (data) {
+		if (handleError(data)) {
+			$( "#share_button" ).removeClass("is-loading");
+			return;
+		}
+		$( "#snapshot_link" ).append(
+			$("<a>").attr("href", "/snapshot/" + data["char_id"] + "/" + data["snapshot_id"]).text("LINK");
+		);
+		$( "#share_button" ).remove();		
+	}).fail(function() { 
+		$( "#share_button" ).removeClass("is-loading");
+	});;
 }
 
 $(document).ready(function(){
 	$( "#share_button" ).click(function() {
 		toggleSharing();
+	});
+	$( "#snapshot_button" ).click(function() {
+		createSnapshot();
 	});
 	
 	updateFleetView();
