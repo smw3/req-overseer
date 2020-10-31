@@ -114,5 +114,7 @@ def resolve_character_id(character_id, resolved_char_dict = None):
         esi_dict = resolved_char_dict
     out_dict["name"] = esi_dict["name"]
     out_dict["corp"] = resolve_corporation_id_to_name(esi_dict["corporation_id"])
+    out_dict["corp_id"] = esi_dict["corporation_id"]
     out_dict["alliance"] = resolve_alliance_id_to_name(esi_dict["alliance_id"])
+    out_dict["alliance_id"] = esi_dict["alliance_id"]
     return out_dict
