@@ -1,5 +1,5 @@
 var sharing = false;
-var timeSinceLastUpdate = new Date("Jan 1, 2020 12:00:00").getTime();
+var timeSinceLastUpdate = undefined;
 
 function handleError(data) {
 	$("#errors").empty();
@@ -15,6 +15,9 @@ function handleError(data) {
 }
 
 function updateTimeSinceUpdate() {
+	if (timeSinceLastUpdate === undefined)
+		return;
+	
 	var now = new Date().getTime();
 	var distance = timeSinceLastUpdate - now;
 	
@@ -36,7 +39,7 @@ function updateTimeSinceUpdate() {
 	
 	timeSinceText = timeSinceText + " ago";
 	
-	$("#last_refresh_time").html("<strong>Last updated: " + timeSinceLastUpdate + " (" + timeSinceText + ")</strong>")
+	$("#last_refresh_time").html("<strong>Last updated: " + timeSinceLastUpdate.dateString + " (" + timeSinceText + ")</strong>")
 }
 
 function updateFleetView() {
@@ -171,6 +174,6 @@ $(document).ready(function(){
 	
 	updateFleetView();
 	setInterval(updateFleetView, 1000 * 60);
-	setInterval(updateTimeSinceUpdate(), 1000);
+	setInterval(updateTimeSinceUpdate, 1000);
 	
 });
