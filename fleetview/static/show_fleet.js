@@ -82,7 +82,7 @@ function toggleSharing() {
 function createSnapshot() {
 	$( "#share_button" ).addClass("is-loading");
 	
-	$.getJSON('/api/fleet/snapshot'), function (data) {
+	$.getJSON('/api/fleet/snapshot', function (data) {
 		if (handleError(data)) {
 			$( "#share_button" ).removeClass("is-loading");
 			return;
@@ -93,7 +93,7 @@ function createSnapshot() {
 		$( "#share_button" ).remove();		
 	}).fail(function() { 
 		$( "#share_button" ).removeClass("is-loading");
-	});;
+	});
 }
 
 $(document).ready(function(){
