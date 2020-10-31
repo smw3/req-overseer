@@ -80,19 +80,19 @@ function toggleSharing() {
 }
 
 function createSnapshot() {
-	$( "#share_button" ).addClass("is-loading");
+	$( "#snapshot_button" ).addClass("is-loading");
 	
-	$.getJSON('/api/fleet/snapshot', function (data) {
+	$.getJSON('/api/fleet/take_snapshot', function (data) {
 		if (handleError(data)) {
 			$( "#share_button" ).removeClass("is-loading");
 			return;
 		}
 		$( "#snapshot_link" ).append(
-			$("<a>").attr("href", "/snapshot/" + data["char_id"] + "/" + data["snapshot_id"]).text("LINK")
+			$("<a>").attr("href", "/api/snapshot/" + data["char_id"] + "/" + data["snapshot_id"]).text("LINK")
 		);
-		$( "#share_button" ).remove();		
+		$( "#snapshot_button" ).remove();		
 	}).fail(function() { 
-		$( "#share_button" ).removeClass("is-loading");
+		$( "#snapshot_button" ).removeClass("is-loading");
 	});
 }
 

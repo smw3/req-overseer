@@ -3,6 +3,8 @@ import json
 import configparser
 import urllib.parse
 import os
+import time
+
 from pathlib import Path
 from datetime import datetime
 
@@ -47,7 +49,7 @@ def current_fleet():
             out["shared_to"] = allowed_participants
             
             if share:
-                save_fleet_scan(out, get_character_id())
+                save_fleet_scan(out, get_character_id(), live = True)
                                
         return json.dumps(out)    
     except CharacterNotInFleetError:
@@ -61,12 +63,17 @@ def current_fleet():
     except Exception as inst:
         return f'{"error": "An unknown error occured: {inst}" }'
     
-@app.route('/api/fleet/snapshot')
+@app.route('/api/fleet/take_snapshot')
 def take_fleet_snapshot(): 
     try:
+        snapshot_id = int(round(time.time() * 1000))
+        char_id = get_character_id()
+        
+        save_fleet_scan(current_fleet(), char_id)        
+        
         out_dict = {}
-        out_dict["char_id"] = 23145352
-        out_dict["snapshot_id"] = 2132
+        out_dict["char_id"] = char_id
+        out_dict["snapshot_id"] = snapshot_id
         
         return json.dumps(out_dict)  
     except CharacterNotInFleetError:
@@ -78,10 +85,7 @@ def take_fleet_snapshot():
     except ESIError:
         return '{"error": "Unknown ESI issue occured, please try again later." }'
     except Exception as inst:
-        return f'{"error": "An unknown error occured: {inst}" }'
-    
-    
-    
+        return f'{"error": "An unknown error occured: {inst}" }'   
     
 def mass_resolve_fleet_members(fleet_info):
     member_ids = [member["character_id"] for member in fleet_info]
@@ -90,13 +94,21 @@ def mass_resolve_fleet_members(fleet_info):
     
     return resolved_members
     
-def save_fleet_scan(fleet_scan, char_id):
-    base_path = config["DEFAULT"]["LIVE_SHARE"]
-    livescan_path = f"{base_path}/{char_id}/live_scan.json"
-    
-    Path(f"{base_path}/{char_id}").mkdir(parents=True, exist_ok=True)
-    
-    json.dump( fleet_scan, open( livescan_path, 'w' ) )
+def save_fleet_scan(fleet_scan, char_id, live = False):
+    if live:
+        base_path = config["DEFAULT"]["LIVE_SHARE"]
+        livescan_path = f"{base_path}/{char_id}/live_scan.json"
+        
+        Path(f"{base_path}/{char_id}").mkdir(parents=True, exist_ok=True)
+        
+        json.dump( fleet_scan, open( livescan_path, 'w' ) )
+    else:
+        base_path = config["DEFAULT"]["SNAPSHOTS"]
+        snapshot_path = f"{base_path}/{char_id}/live_scan.json"
+        
+        Path(f"{base_path}/{char_id}").mkdir(parents=True, exist_ok=True)
+        
+        json.dump( fleet_scan, open( snapshot_path, 'w' ) )        
     
 @app.route('/api/shared_fleet/<sharer_char_id>')
 def shared_fleet(sharer_char_id):
@@ -113,77 +125,21 @@ def shared_fleet(sharer_char_id):
                 return '{"error": "You were not authorized to see this fleet scan!" }'
         except NotAuthedError:
             return '{"error": "You need to authenticate first!" }'
-        
-        return fleet_scan
     else:
         return '{"error": "No livescan by that character ID available!" }'
     
-@app.route('/api/mock/fleet')
-def current_fleet_mock():
-    return '''{
-	"members": [
-		{
-			"character_id": 1581768186,
-			"join_time": "2020-10-24T17:32:56Z",
-			"role": "fleet_commander",
-			"role_name": "Fleet Commander (Boss)",
-			"ship_type_id": 670,
-			"solar_system_id": 30002619,
-			"squad_id": -1,
-			"takes_fleet_warp": true,
-			"wing_id": -1,
-			"name": "IHaveAShortName",
-			"corp": "Pipebomb Pinata",
-			"alliance": "Requiem Eternal",
-			"solar_system_name": "6E-MOW",
-			"ship_info": {
-				"name": "Capsule",
-				"type": "Capsule"
-			}
-		},
-		{
-			"character_id": 1581768186,
-			"join_time": "2020-10-24T17:32:56Z",
-			"role": "fleet_commander",
-			"role_name": "Fleet Commander (Boss)",
-			"ship_type_id": 670,
-			"solar_system_id": 30002619,
-			"squad_id": -1,
-			"takes_fleet_warp": true,
-			"wing_id": -1,
-			"name": "IHaveAShortName",
-			"corp": "Pipebomb Pinata",
-			"alliance": "Requiem Eternal",
-			"solar_system_name": "6E-MOW",
-			"ship_info": {
-				"name": "Capsule",
-				"type": "Capsule"
-			}
-		},
-		{
-			"character_id": 1581768186,
-			"join_time": "2020-10-24T17:32:56Z",
-			"role": "fleet_commander",
-			"role_name": "Fleet Commander (Boss)",
-			"ship_type_id": 670,
-			"solar_system_id": 30002619,
-			"squad_id": -1,
-			"takes_fleet_warp": true,
-			"wing_id": -1,
-			"name": "IHaveAShortName",
-			"corp": "Pipebomb Pinata",
-			"alliance": "Requiem Eternal",
-			"solar_system_name": "6E-MOW",
-			"ship_info": {
-				"name": "Capsule",
-				"type": "Capsule"
-			}
-		}
-	],
-	"fleet_comp": {
-		"Capsule": 3
-	},
-	"ships": {
-		"Capsule": 3
-	}
-}'''
+    
+@app.route('/api/fleet/snapshot/<char_id>/<snapshot_id>')
+def get_fleet_snapshot(char_id, snapshot_id):     
+    base_path = config["DEFAULT"]["SNAPSHOTS"]
+    snapshot_path = f"{base_path}/{char_id}/{snapshot_id}.json"
+    
+    if os.path.exists(snapshot_path):
+        fleet_scan = json.load( open( snapshot_path ) )
+        
+        try:
+            return json.dumps(fleet_scan)
+        except NotAuthedError:
+            return '{"error": "You need to authenticate first!" }'
+    else:
+        return '{"error": "No livescan by that ID available!" }' 
