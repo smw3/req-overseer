@@ -69,7 +69,7 @@ def take_fleet_snapshot():
         snapshot_id = int(round(time.time() * 1000))
         char_id = get_character_id()
         
-        save_fleet_scan(current_fleet(), char_id)        
+        save_fleet_scan(current_fleet(), char_id, fleet_scan_name = f"{snapshot_id}.json")        
         
         out_dict = {}
         out_dict["char_id"] = char_id
@@ -94,7 +94,7 @@ def mass_resolve_fleet_members(fleet_info):
     
     return resolved_members
     
-def save_fleet_scan(fleet_scan, char_id, live = False):
+def save_fleet_scan(fleet_scan, char_id, live = False, fleet_scan_name = "none.json"):
     if live:
         base_path = config["DEFAULT"]["LIVE_SHARE"]
         livescan_path = f"{base_path}/{char_id}/live_scan.json"
@@ -104,7 +104,7 @@ def save_fleet_scan(fleet_scan, char_id, live = False):
         json.dump( fleet_scan, open( livescan_path, 'w' ) )
     else:
         base_path = config["DEFAULT"]["SNAPSHOTS"]
-        snapshot_path = f"{base_path}/{char_id}/live_scan.json"
+        snapshot_path = f"{base_path}/{char_id}/{fleet_scan_name}.json"
         
         Path(f"{base_path}/{char_id}").mkdir(parents=True, exist_ok=True)
         
