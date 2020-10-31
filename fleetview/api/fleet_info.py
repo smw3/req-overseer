@@ -22,7 +22,7 @@ def current_fleet():
         allowed_participants = []
     
     try:
-        out = { "members" : [], "fleet_comp": {}, "ships": {}, "alliances": {}, "coporations": {} }
+        out = { "members" : [], "fleet_comp": {}, "ships": {}, "alliances": {}, "corporations": {} }
         app.logger.info("Query fleet under " + str(get_char_info()))
         
         fleet_info = get_fleet_members() 

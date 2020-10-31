@@ -94,7 +94,7 @@ function updateFleetView() {
 		
 		$("#errors").append(
 			$("<div>").attr("class", "container").append(
-				$("<div>").attr("class", "notification is-primary").text(textStatus)
+				$("<div>").attr("class", "notification is-primary").text(textStatus + ":" + errorThrown)
 			)
 		);
 	});
