@@ -138,7 +138,7 @@ def get_fleet_snapshot(char_id, snapshot_id):
         fleet_scan = json.load( open( snapshot_path ) )
         
         try:
-            return json.dumps(fleet_scan)
+            return fleet_scan
         except NotAuthedError:
             return '{"error": "You need to authenticate first!" }'
     else:
