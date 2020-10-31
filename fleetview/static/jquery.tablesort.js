@@ -14,7 +14,7 @@
 		this.$sortCells.on('click.tablesort', function() {
 			self.sort($(this));
 		});
-		this.$sortCells.each(self.sort($(this), false));
+		this.$sortCells.each(function() { self.sort($(this), false) });
 		this.index = null;
 		this.$th = null;
 	};
@@ -42,7 +42,6 @@
 
 			if (swap_dir) {
 				if (th.hasClass("sort-asc")) {
-					console.log(sortCells);
 					table.find("th").removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
 					table.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
 					th.removeClass("sort-asc").addClass("sort-desc").removeClass("sort-none");
@@ -51,7 +50,6 @@
 					th.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
 					th.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
 				} else {
-					console.log(sortCells);
 					table.find("th").removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
 					table.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
 					th.addClass("sort-asc").removeClass("sort-desc").removeClass("sort-none");
