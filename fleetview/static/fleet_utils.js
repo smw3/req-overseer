@@ -61,21 +61,21 @@ function updateTimeSinceUpdate() {
 	var timeSinceText = "";
 	var days = Math.floor(distance / (1000 * 60 * 60 * 24));
 	if (days > 0)
-		timeSinceText = timeSinceText + days + " days";
+		timeSinceText = timeSinceText + days + " days ";
 	
 	var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	if (hours > 0)
-		timeSinceText = timeSinceText + days + " hours";
+		timeSinceText = timeSinceText + days + " hours ";
 	
 	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 	if (minutes > 0)
-		timeSinceText = timeSinceText + days + " minutes";
+		timeSinceText = timeSinceText + days + " minutes ";
 	
 	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 	if (distance < 1000*60*10) 
-		timeSinceText = timeSinceText + seconds + " seconds";
+		timeSinceText = timeSinceText + seconds + " seconds ";
 	
-	timeSinceText = timeSinceText + " ago";
+	timeSinceText = timeSinceText + "ago";
 	
 	$("#last_refresh_time").html("<strong>Last updated: " + formatDate(new Date(timeSinceLastUpdate)) + " (" + timeSinceText + ")</strong>")
 }
