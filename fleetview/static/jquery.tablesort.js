@@ -14,13 +14,14 @@
 		this.$sortCells.on('click.tablesort', function() {
 			self.sort($(this));
 		});
+		this.$sortCells.each(self.sort($(this), false));
 		this.index = null;
 		this.$th = null;
 	};
 
 	$.tablesort.prototype = {
 
-		sort: function(th) {
+		sort: function(th, swap_dir = true) {
 			var start = new Date(),
 				self = this,
 				table = this.$table,
@@ -39,25 +40,31 @@
 			});
 			if (unsortedValues.length === 0) return;
 
-			var direction = 'asc';
+			if (swap_dir) {
+				if (th.hasClass("sort-asc")) {
+					console.log(sortCells);
+					table.find("th").removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
+					table.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
+					th.removeClass("sort-asc").addClass("sort-desc").removeClass("sort-none");
+					th.find( "i" ).removeClass("fa-sort-up").addClass("fa-sort-down").removeClass("fa-sort");
+				} else if (th.hasClass("sort-desc")) {
+					th.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
+					th.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
+				} else {
+					console.log(sortCells);
+					table.find("th").removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
+					table.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
+					th.addClass("sort-asc").removeClass("sort-desc").removeClass("sort-none");
+					th.find( "i" ).addClass("fa-sort-up").removeClass("fa-sort-down").removeClass("fa-sort");
+				}
+			}
+			
 			if (th.hasClass("sort-asc")) {
-				th.removeClass("sort-asc").addClass("sort-desc").removeClass("sort-none");
-				direction = 'desc';
-				console.log(sortCells);
-				table.find("th").removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
-				table.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
-				th.find( "i" ).removeClass("fa-sort-up").addClass("fa-sort-down").removeClass("fa-sort");
-			} else if (th.hasClass("sort-desc")) {
-				th.removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
-				th.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
-				return;
-			} else {
-				th.addClass("sort-asc").removeClass("sort-desc").removeClass("sort-none");
 				direction = 'asc';
-				console.log(sortCells);
-				table.find("th").removeClass("sort-asc").removeClass("sort-desc").addClass("sort-none");
-				table.find( "i" ).removeClass("fa-sort-up").removeClass("fa-sort-down").addClass("fa-sort");
-				th.find( "i" ).addClass("fa-sort-up").removeClass("fa-sort-down").removeClass("fa-sort");
+			} else if (th.hasClass("sort-desc")) {
+				direction = 'desc';
+			} else {
+				return;
 			}
 
 			self.$table.trigger('tablesort:start', [self]);
