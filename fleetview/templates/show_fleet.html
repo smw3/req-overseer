@@ -66,22 +66,22 @@
 					<table class="table" onload="tablesort()" id="members_table">
 						<thead>
 							<tr>
-								<th>Name
+								<th style="white-space: nowrap">Name
 									<span class="icon">
 										<i class='fas fa-sort'></i>
 									</span>
 								</th>
-								<th>Ship
+								<th style="white-space: nowrap">Ship
 									<span class="icon">
 										<i class='fas fa-sort'></i>
 									</span>
 								</th>
-								<th>Type
+								<th style="white-space: nowrap">Type
 									<span class="icon">
 										<i class='fas fa-sort'></i>
 									</span>
 								</th>
-								<th>Location
+								<th style="white-space: nowrap">Location
 									<span class="icon">
 										<i class='fas fa-sort'></i>
 									</span>
@@ -91,9 +91,47 @@
 						<tbody id="members_body">
 						</tbody>
 					</table>
-				</div>		
-				<div id="fleetcomp" class="column"></div>	
-				<div id="ships" class="column"></div>
+				</div>
+				<div class="column">
+					<table class="table" onload="tablesort()" id="fleetcomp_table">
+						<thead>
+							<tr>
+								<th style="white-space: nowrap">Type
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+								<th style="white-space: nowrap">Number
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody id="fleetcomp_body">
+						</tbody>
+					</table>
+				</div>					
+				<div class="column">
+					<table class="table" onload="tablesort()" id="ships_table">
+						<thead>
+							<tr>
+								<th style="white-space: nowrap">Name
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+								<th style="white-space: nowrap">Number
+									<span class="icon">
+										<i class='fas fa-sort'></i>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody id="ships_body">
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</section>
