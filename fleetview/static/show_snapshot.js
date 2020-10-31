@@ -34,12 +34,12 @@ function updateFleetView() {
 				$('<figure>').addClass("image").addClass("is-32x32").append(
 					$('<img>').attr('src','https://images.evetech.net/alliances/' + value["alliance_id"] + '/logo?size=32')
 				)
-			);
+			));
 			row.append($('<td>').attr("data-sort-value", value["corp"]).append(
 				$('<figure>').addClass("image").addClass("is-32x32").append(
 					$('<img>').attr('src','https://images.evetech.net/alliances/' + value["corp_id"] + '/logo?size=32')
 				)
-			);
+			));
 			row.append($('<td>').text(value["name"]));
 			row.append($('<td>').text(value["ship_info"]["name"]));
 			row.append($('<td>').text(value["ship_info"]["type"]));
