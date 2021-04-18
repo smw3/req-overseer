@@ -114,7 +114,11 @@ def save_fleet_scan(fleet_scan, char_id, live = False, fleet_scan_name = "none")
         Path(f"{base_path}/{char_id}").mkdir(parents=True, exist_ok=True)
         
         json.dump( fleet_scan, open( snapshot_path, 'w' ) )        
-    
+
+def character_in_fleet_scan(fleet_scan):
+    char_name = get_char_info()["CharacterName"]
+    return char_name in [m["name"] for m in fleet_scan["members"]]
+
 @app.route('/api/shared_fleet/<sharer_char_id>')
 def shared_fleet(sharer_char_id):
     base_path = config["DEFAULT"]["LIVE_SHARE"]
@@ -127,6 +131,8 @@ def shared_fleet(sharer_char_id):
             if get_char_info()["CharacterName"] in fleet_scan["shared_to"]:
                 return json.dumps(fleet_scan)
             else:
+                if character_in_fleet_scan(fleet_scan):
+                    return json.dumps(fleet_scan)
                 return '{"error": "You were not authorized to see this fleet scan!" }'
         except NotAuthedError:
             return '{"error": "You need to authenticate first!" }'
